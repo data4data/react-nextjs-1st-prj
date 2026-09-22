@@ -31,8 +31,8 @@ blog post does not.
 the browser as finished HTML. It cannot listen to clicks. A **Client Component**
 keeps living in the browser, so it can react to clicks and remember things.
 
-**In this project.** `app/(site)/page.tsx` is a server component. It reads the
-park content and returns HTML. `components/contact-modal.tsx` starts with
+**In this project.** `app/(site)/[site]/page.tsx` is a server component. It reads
+the park content and returns HTML. `components/contact-modal.tsx` starts with
 `"use client"` because it must open and close.
 
 **What breaks.** Put `useState` in a server component and you get an error.
@@ -63,8 +63,8 @@ value. You never touch the HTML yourself.
 **What breaks.** Writing `active = "faciliteiten"` directly. The value changes
 but nothing on screen updates, because React was not told.
 
-**Exercise.** Add a fourth tab to `data/site.json`. How many `.tsx` files did
-you have to change?
+**Exercise.** Add a fourth tab to `data/sites/veluwse-hei.json`. How many `.tsx`
+files did you have to change?
 
 ---
 
@@ -73,15 +73,15 @@ you have to change?
 **What it means.** **Props** are the data a component receives from outside,
 like arguments to a function.
 
-**In this project.** `InfoSection` does not read `site.json`. It gets
-`heading` and `body` as props. That is why the same component can be used twice
-with different text, and why the dashboard preview can reuse it.
+**In this project.** `InfoSection` does not read any JSON file. It gets
+`heading` and `body` as props. That is exactly why the same component draws both
+parks without knowing that two parks exist.
 
 **What breaks.** If a component fetches its own data, you cannot reuse it and
 you cannot test it. It only works in one place.
 
 **Exercise.** Where does `InfoSection` get its text from? Follow it backwards to
-`data/site.json`.
+`data/sites/veluwse-hei.json`.
 
 ---
 
@@ -151,8 +151,8 @@ request. An **httpOnly** cookie cannot be read by JavaScript, so it is safe for
 a session.
 
 **In this project.** `lib/auth/session.ts` signs a cookie with a secret.
-`proxy.ts` checks it before `/dashboard` renders. `requireUser()` checks it
-again inside the save action.
+`proxy.ts` checks it before `/veluwse-hei/settings` renders. `requireUser()`
+checks it again inside the save action.
 
 **Why twice?** The gate at the door stops a person browsing to the page. The
 check inside stops someone sending a request straight to the action. Both are
@@ -171,15 +171,18 @@ happens, and which file stopped you?
 **What it means.** Next may keep a finished page and reuse it, so the next
 visitor gets it fast. **Revalidate** means: this is old now, build it again.
 
-**In this project.** After the dashboard saves, `saveSite` calls
-`revalidatePath("/")`. Without that line, you save, open the site, and see the
-old text, and it looks like the save failed.
+**In this project.** After the settings screen saves, `saveSiteAction` calls
+`revalidatePath("/veluwse-hei")`. Without that line, you save, open the site,
+and see the old text, and it looks like the save failed.
+
+Notice the path has the slug in it. Only the park you edited is rebuilt; the
+other park's page stays as it was, and stays fast.
 
 **What breaks.** Exactly that: a save that "does nothing". The data was written,
 the page was just not rebuilt.
 
-**Exercise.** Comment out `revalidatePath("/")`, save a new title, and open `/`.
-Then put it back.
+**Exercise.** Comment out the `revalidatePath` lines, save a new title, and open
+the website. Then put them back.
 
 ---
 
@@ -189,14 +192,24 @@ Then put it back.
 use. Change the variable, and everything using it changes.
 
 **In this project.** `app/globals.css` defines `--primary`. Tailwind classes
-like `bg-primary` read it. The CMS writes a new value on a wrapper element, so
-the admin can change the whole site color from one input.
+like `bg-primary` read it. `components/theme-provider.tsx` writes a new value in
+a `:root` rule, so the admin can change the whole site color from one input.
+
+The secondary color is used too: `--section-tint` mixes it with the page
+background, and `SectionShell` paints every other section with it. One variable
+built out of another, so the recipe lives in one place.
+
+**Why `:root` and not a wrapper `<div>`?** A CSS variable is inherited by
+children. The contact modal is not a child: it is rendered through a **portal**,
+straight into `<body>`. On a wrapper it would miss the colors and fall back to
+the defaults, which is how it once ended up pink on a green site.
 
 **What breaks.** Hardcoding `bg-pink-500` in twenty components. Then a color
 change means twenty edits.
 
-**Exercise.** Change the primary color in the dashboard. Count how many files
-you had to edit. (Zero.)
+**Exercise.** Change the secondary color in the settings screen. Count how many
+files you had to edit. (Zero.) Then open the contact modal and check its button
+followed the primary color.
 
 ---
 
@@ -213,7 +226,46 @@ Errors thrown on the server arrive with a generic message and a `digest` id.
 That is deliberate: real error text could leak private details to a visitor.
 
 **Exercise.** Throw an error on purpose in `page.tsx`. Which file appears?
-Then move the throw into the dashboard. Which one appears now?
+Then move the throw into the settings page. Which one appears now?
+
+---
+
+## Lesson 11 — Dynamic routes, or one page for many websites
+
+**What it means.** A folder in square brackets is a **dynamic segment**: a piece
+of the URL that changes. `app/(site)/[site]/page.tsx` answers `/veluwse-hei` and
+`/zeeduin` with the same file. The value is handed to the page as `params`.
+
+Round brackets do the opposite. `(site)` is a **route group**: it does not show
+up in the URL at all, it only lets a set of routes share a layout.
+
+**In this project.**
+
+```tsx
+const { site: slug } = await params   // "zeeduin"
+const site = await getSite(slug)      // reads data/sites/zeeduin.json
+if (!site) notFound()                 // 404 for a park that does not exist
+```
+
+`params` is a promise, so it is awaited. That is new in Next 15 and 16; older
+tutorials read `params.site` directly.
+
+**Why `notFound()`?** Without it, an unknown slug would render an empty page
+with status 200, and Google would happily index it.
+
+**What breaks.** Two things, both worth seeing once:
+
+- Joining the slug into a file path without checking it. The slug comes from the
+  visitor, so `..%2F..%2Fsecrets` would read a file outside `data/sites/`.
+  `siteFile()` in the repository refuses anything that is not letters, digits
+  and dashes.
+- Putting `loading.tsx` one folder too high. It starts streaming the answer, the
+  status code goes out as 200 before the layout notices the park is missing, and
+  the 404 quietly stops being a 404.
+
+**Exercise.** Copy `data/sites/zeeduin.json` to `data/sites/duinhof.json`, change
+the `"slug"` inside to `"duinhof"`, and open `/duinhof`. Count the `.tsx` files
+you changed. (Zero.)
 
 ---
 
@@ -228,8 +280,9 @@ Follow the commits on the branch. Each commit is one small step:
 5. sections
 6. contact modal
 7. login
-8. dashboard
+8. the settings screen
 9. theme colors
+10. two websites on one codebase
 
 After each one, ask yourself the same question: **if I had to change this
 tomorrow, which single file would I open?** If the answer is "five files", the
