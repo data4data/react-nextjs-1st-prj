@@ -56,7 +56,7 @@ function CarouselForm({ section, onChange }: FormProps<CarouselSectionData>) {
           <TextField
             label="Afbeelding"
             value={slide.image}
-            placeholder="/hero-images/hero1.png"
+            placeholder="/hero-images/veluwe1.png"
             onChange={(image) => updateSlide(index, { image })}
           />
         </div>
@@ -136,7 +136,7 @@ function TabsForm({ section, onChange }: FormProps<TabsSectionData>) {
           <TextField
             label="Afbeelding"
             value={item.image ?? ""}
-            placeholder="/hero-images/hero1.png"
+            placeholder="/hero-images/veluwe1.png"
             onChange={(image) => updateItem(index, { image: image || undefined })}
           />
         </div>

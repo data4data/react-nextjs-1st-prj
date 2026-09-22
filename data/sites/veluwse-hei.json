@@ -26,17 +26,17 @@
       "visible": true,
       "slides": [
         {
-          "image": "/hero-images/hero1.png",
+          "image": "/hero-images/veluwe1.png",
           "title": "Wakker worden tussen de bomen",
           "text": "Ruime vakantiehuisjes op eigen plek, met de bossen van de Veluwe als achtertuin."
         },
         {
-          "image": "/hero-images/hero2.png",
+          "image": "/hero-images/veluwe2.png",
           "title": "Kamperen op de heide",
           "text": "Rustige velden voor tent en caravan, met uitzicht over de paarse heide."
         },
         {
-          "image": "/hero-images/hero3.png",
+          "image": "/hero-images/veluwe3.png",
           "title": "Buiten spelen, de hele dag",
           "text": "Speelbos, zwemvijver en fietsroutes die vanaf het park vertrekken."
         }
@@ -60,19 +60,19 @@
           "label": "Accommodaties",
           "heading": "Huisjes voor twee tot zes personen",
           "body": "Alle huisjes hebben een eigen terras, een volledig ingerichte keuken en gratis wifi. De grotere types hebben een houtkachel voor het najaar. Honden zijn welkom in de bosvilla's.",
-          "image": "/hero-images/hero1.png"
+          "image": "/hero-images/veluwe1.png"
         },
         {
           "label": "Faciliteiten",
           "heading": "Alles op loopafstand",
           "body": "Op het park vindt u een kleine supermarkt, een wasruimte, een speelbos en een verwarmde zwemvijver. Het restaurant serveert van april tot oktober elke avond een dagmenu.",
-          "image": "/hero-images/hero2.png"
+          "image": "/hero-images/veluwe3.png"
         },
         {
           "label": "Omgeving",
           "heading": "De Veluwe begint bij het hek",
           "body": "Vanaf het park vertrekken gemarkeerde wandel- en fietsroutes. Nationaal Park De Hoge Veluwe ligt op twintig minuten rijden, Apeldoorn en Paleis Het Loo op een klein half uur.",
-          "image": "/hero-images/hero3.png"
+          "image": "/hero-images/veluwe2.png"
         }
       ]
     },
