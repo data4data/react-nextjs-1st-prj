@@ -1,6 +1,11 @@
 /**
  * Shown while the page is still being built on the server. The shapes roughly
  * match the real sections, so the page does not jump when the content lands.
+ *
+ * It has to sit next to the page, not one folder higher. A loading file starts
+ * streaming the answer, and once streaming has begun the status code is already
+ * sent as 200. From up there it would wrap `layout.tsx` as well, and the
+ * `notFound()` for an unknown website would arrive too late to still be a 404.
  */
 export default function SiteLoading() {
   return (

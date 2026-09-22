@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { emptyActionState } from "@/lib/cms/action-state";
 
-export function LoginForm() {
+export function LoginForm({ next }: { next: string }) {
   const [state, formAction, isPending] = useActionState(login, emptyActionState);
 
   return (
@@ -28,6 +28,9 @@ export function LoginForm() {
 
         <CardContent>
           <form action={formAction} className="grid gap-4">
+            {/* Where to go after logging in, put here by proxy.ts. */}
+            <input type="hidden" name="next" value={next} />
+
             <div className="grid gap-2">
               <Label htmlFor="email">E-mailadres</Label>
               <Input

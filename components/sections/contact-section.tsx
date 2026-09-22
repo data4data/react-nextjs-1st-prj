@@ -5,9 +5,11 @@ import type { ContactSectionData } from "@/lib/cms/types";
 export function ContactSection({
   section,
   index,
+  siteSlug,
 }: {
   section: ContactSectionData;
   index: number;
+  siteSlug: string;
 }) {
   return (
     <SectionShell id={section.id} index={index}>
@@ -18,7 +20,11 @@ export function ContactSection({
         <p className="mt-4 text-lg text-pretty text-muted-foreground">{section.body}</p>
 
         <div className="mt-8 flex justify-center">
-          <ContactModal triggerLabel={section.buttonLabel} size="lg" />
+          <ContactModal
+            triggerLabel={section.buttonLabel}
+            siteSlug={siteSlug}
+            size="lg"
+          />
         </div>
       </div>
     </SectionShell>

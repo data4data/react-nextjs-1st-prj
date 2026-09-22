@@ -9,7 +9,13 @@ import type { Section } from "@/lib/cms/types";
  * `index` is the position in the *rendered* list, not in the stored list, so
  * the striped background stays correct when a section is hidden.
  */
-export function SectionRenderer({ sections }: { sections: Section[] }) {
+export function SectionRenderer({
+  sections,
+  siteSlug,
+}: {
+  sections: Section[];
+  siteSlug: string;
+}) {
   const visible = sections.filter((section) => section.visible);
 
   if (visible.length === 0) {
@@ -39,7 +45,14 @@ export function SectionRenderer({ sections }: { sections: Section[] }) {
           return null;
         }
 
-        return <Component key={section.id} section={section} index={index} />;
+        return (
+          <Component
+            key={section.id}
+            section={section}
+            index={index}
+            siteSlug={siteSlug}
+          />
+        );
       })}
     </>
   );

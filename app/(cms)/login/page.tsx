@@ -7,11 +7,17 @@ export const metadata = {
   title: "Inloggen",
 };
 
-export default async function LoginPage() {
+export default async function LoginPage({ searchParams }: PageProps<"/login">) {
+  const { next } = await searchParams;
+
+  // proxy.ts puts the page you were heading for in ?next=. Anything odd falls
+  // back to the list of websites.
+  const target = typeof next === "string" && next.startsWith("/") ? next : "/";
+
   // Already signed in? Then skip the form.
   if (await getUser()) {
-    redirect("/dashboard");
+    redirect(target);
   }
 
-  return <LoginForm />;
+  return <LoginForm next={target} />;
 }

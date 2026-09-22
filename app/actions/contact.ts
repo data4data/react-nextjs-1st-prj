@@ -15,6 +15,7 @@ export async function submitContact(
   formData: FormData
 ): Promise<ActionResult> {
   const parsed = contactMessageSchema.safeParse({
+    site: formData.get("site"),
     name: formData.get("name"),
     email: formData.get("email"),
     message: formData.get("message"),

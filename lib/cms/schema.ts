@@ -12,6 +12,17 @@ const hexColor = z
   .string()
   .regex(/^#[0-9a-fA-F]{6}$/, { error: "Use a hex color like #2f6f4e" });
 
+/**
+ * The name of one website, as it appears in the URL: `/veluwse-hei`.
+ *
+ * It is also the file name under `data/sites/`, so it is kept to letters,
+ * digits and dashes. A slug can never contain a dot or a slash, which is what
+ * stops a request for `/../../etc/passwd` from reaching the file system.
+ */
+export const slugSchema = z
+  .string()
+  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, { error: "Use a slug like veluwse-hei" });
+
 const sectionBase = z.object({
   id: z.string().min(1),
   visible: z.boolean(),
@@ -67,6 +78,7 @@ export const sectionSchema = z.discriminatedUnion("type", [
 ]);
 
 export const siteSchema = z.object({
+  slug: slugSchema,
   title: z.string().min(1),
   description: z.string(),
   theme: z.object({
@@ -75,6 +87,8 @@ export const siteSchema = z.object({
   }),
   header: z.object({
     logoText: z.string().min(1),
+    /** Which lucide icon sits next to the name. See `logoIcons` in the header. */
+    logoIcon: z.enum(["tree", "waves", "tent", "sun"]),
     ctaLabel: z.string().min(1),
   }),
   footer: z.object({
@@ -91,6 +105,8 @@ export const siteSchema = z.object({
 
 /** What a visitor may send through the contact modal. */
 export const contactMessageSchema = z.object({
+  /** Which website the form was filled in on, so the two parks stay apart. */
+  site: slugSchema,
   name: z.string().min(2, { error: "Vul minimaal 2 tekens in" }).trim(),
   email: z.email({ error: "Vul een geldig e-mailadres in" }).trim(),
   message: z

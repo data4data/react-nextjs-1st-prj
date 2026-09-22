@@ -1,17 +1,34 @@
 "use client";
 
 import { useState, useTransition, type ComponentType } from "react";
-import { ArrowDown, ArrowUp, Eye, EyeOff } from "lucide-react";
+import Link from "next/link";
+import { ArrowDown, ArrowUp, Eye, EyeOff, Sun, Tent, TreePine, Waves } from "lucide-react";
 import { toast } from "sonner";
 
 import { saveSiteAction } from "@/app/actions/site";
 import { ColorField, TextAreaField, TextField } from "@/components/dashboard/fields";
 import { sectionFormRegistry, sectionLabels } from "@/components/dashboard/section-forms";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
 import type { Section, Site } from "@/lib/cms/types";
 
 type SectionFormProps = { section: Section; onChange: (section: Section) => void };
+
+/**
+ * The icons a website can choose from. The list matches the `logoIcon` enum in
+ * the schema, so the editor can never offer an icon the website cannot draw.
+ */
+const logoIconOptions = [
+  { value: "tree", label: "Boom", Icon: TreePine },
+  { value: "waves", label: "Golven", Icon: Waves },
+  { value: "tent", label: "Tent", Icon: Tent },
+  { value: "sun", label: "Zon", Icon: Sun },
+] as const satisfies ReadonlyArray<{
+  value: Site["header"]["logoIcon"];
+  label: string;
+  Icon: ComponentType<{ className?: string }>;
+}>;
 
 /**
  * The edit screen.
@@ -44,7 +61,7 @@ export function SiteEditor({ initialSite }: { initialSite: Site }) {
 
   function save() {
     startTransition(async () => {
-      const result = await saveSiteAction(site);
+      const result = await saveSiteAction(site.slug, site);
 
       if (result.ok) {
         toast.success(result.message);
@@ -56,11 +73,20 @@ export function SiteEditor({ initialSite }: { initialSite: Site }) {
 
   return (
     <div className="grid gap-6 pb-24">
-      <div>
-        <h1 className="text-2xl font-semibold">Inhoud van de website</h1>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Wijzigingen zijn pas zichtbaar op de website nadat u opslaat.
-        </p>
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-semibold text-pretty">{initialSite.title}</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Wijzigingen zijn pas zichtbaar op de website nadat u opslaat.
+          </p>
+        </div>
+
+        <Link
+          href={`/${site.slug}`}
+          className={buttonVariants({ variant: "outline", size: "sm" })}
+        >
+          Bekijk website
+        </Link>
       </div>
 
       <Card>
@@ -126,6 +152,25 @@ export function SiteEditor({ initialSite }: { initialSite: Site }) {
               setSite({ ...site, header: { ...site.header, ctaLabel } })
             }
           />
+
+          <div className="grid gap-2 sm:col-span-2">
+            <Label>Icoon naast de naam</Label>
+            <div className="flex flex-wrap gap-2">
+              {logoIconOptions.map(({ value, label, Icon }) => (
+                <Button
+                  key={value}
+                  type="button"
+                  variant={site.header.logoIcon === value ? "default" : "outline"}
+                  onClick={() =>
+                    setSite({ ...site, header: { ...site.header, logoIcon: value } })
+                  }
+                >
+                  <Icon />
+                  {label}
+                </Button>
+              ))}
+            </div>
+          </div>
         </CardContent>
       </Card>
 

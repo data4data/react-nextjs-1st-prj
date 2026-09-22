@@ -21,6 +21,8 @@ import type { ActionResult } from "@/lib/cms/types";
 
 type ContactModalProps = {
   triggerLabel: string;
+  /** Goes along with the message, so you can tell the two parks apart. */
+  siteSlug: string;
   variant?: "default" | "outline" | "secondary" | "ghost";
   size?: "default" | "lg";
 };
@@ -37,6 +39,7 @@ type ContactModalProps = {
  */
 export function ContactModal({
   triggerLabel,
+  siteSlug,
   variant = "default",
   size = "default",
 }: ContactModalProps) {
@@ -81,6 +84,8 @@ export function ContactModal({
         </DialogHeader>
 
         <form ref={formRef} action={formAction} className="grid gap-4">
+          <input type="hidden" name="site" value={siteSlug} />
+
           <Field
             id={`${fieldId}-name`}
             name="name"

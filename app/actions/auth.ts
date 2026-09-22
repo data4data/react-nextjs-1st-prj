@@ -11,6 +11,20 @@ const loginSchema = z.object({
   password: z.string().min(1, { error: "Vul uw wachtwoord in" }),
 });
 
+/**
+ * Where to send someone after they log in.
+ *
+ * The value comes from the URL, so it cannot be trusted: `?next=https://evil`
+ * would turn our own login page into a springboard to another website. Only a
+ * path on this site is allowed, and `//host` is refused because a browser reads
+ * that as a full address.
+ */
+function safeNext(value: FormDataEntryValue | null): string {
+  const next = typeof value === "string" ? value : "";
+
+  return next.startsWith("/") && !next.startsWith("//") ? next : "/";
+}
+
 export async function login(
   _previous: ActionResult,
   formData: FormData
@@ -39,7 +53,7 @@ export async function login(
   await createSession(parsed.data.email);
 
   // `redirect` works by throwing, so nothing after this line runs.
-  redirect("/dashboard");
+  redirect(safeNext(formData.get("next")));
 }
 
 export async function logout(): Promise<void> {

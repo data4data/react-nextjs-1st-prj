@@ -14,6 +14,9 @@ export type Site = z.infer<typeof siteSchema>;
 export type Section = z.infer<typeof sectionSchema>;
 export type SectionType = Section["type"];
 
+/** Just enough of a site to draw a card on the index page. */
+export type SiteSummary = Pick<Site, "slug" | "title" | "description" | "theme">;
+
 export type CarouselSectionData = z.infer<typeof carouselSectionSchema>;
 export type InfoSectionData = z.infer<typeof infoSectionSchema>;
 export type TabsSectionData = z.infer<typeof tabsSectionSchema>;

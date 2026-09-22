@@ -1,0 +1,79 @@
+{
+  "slug": "zeeduin",
+  "title": "Strandpark Zeeduin",
+  "description": "Strandhuisjes en duinkamperen aan de Zeeuwse kust. Wakker worden met de zee voor de deur.",
+  "theme": {
+    "primary": "#1f6f8b",
+    "secondary": "#e2714a"
+  },
+  "header": {
+    "logoText": "Zeeduin",
+    "logoIcon": "waves",
+    "ctaLabel": "Vraag een plek aan"
+  },
+  "footer": {
+    "text": "Strandpark Zeeduin, Duinweg 3, 4356 CA Oostkapelle",
+    "links": [{ "label": "Contact", "href": "#contact" }]
+  },
+  "sections": [
+    {
+      "id": "hero",
+      "type": "carousel",
+      "visible": true,
+      "slides": [
+        {
+          "image": "/hero-images/duin1.png",
+          "title": "Over het duin en zo de zee in",
+          "text": "Het strand ligt op driehonderd meter, over een eigen vlonderpad door de duinen."
+        },
+        {
+          "image": "/hero-images/duin2.png",
+          "title": "Slapen in een strandhuisje",
+          "text": "Licht hout, grote ramen en een terras op het zuiden. Twaalf huisjes, meer niet."
+        }
+      ]
+    },
+    {
+      "id": "verblijf",
+      "type": "tabs",
+      "visible": true,
+      "heading": "Wat u bij ons vindt",
+      "orientation": "vertical",
+      "items": [
+        {
+          "label": "Strandhuisjes",
+          "heading": "Twaalf huisjes op palen",
+          "body": "Elk huisje slaapt vier personen en heeft een eigen terras met uitzicht over de duinen. De keuken is compleet, de bedden zijn opgemaakt bij aankomst.",
+          "image": "/hero-images/duin2.png"
+        },
+        {
+          "label": "Duinkamperen",
+          "heading": "Kleine velden uit de wind",
+          "body": "Twintig plekken tussen de duindoorns, met stroom en een eigen waterpunt. Geen rijen, geen slagbomen.",
+          "image": "/hero-images/duin1.png"
+        },
+        {
+          "label": "Het strand",
+          "heading": "Acht kilometer zand",
+          "body": "Bij laag water loopt u zo tot Domburg. De strandtent bij de opgang is van maart tot november open.",
+          "image": "/hero-images/duin3.png"
+        }
+      ]
+    },
+    {
+      "id": "info",
+      "type": "info",
+      "visible": false,
+      "heading": "Het seizoen 2027",
+      "body": "Deze sectie staat op verborgen. Zet hem aan in de instellingen en hij verschijnt op de website, op precies deze plek in de rij."
+    },
+    {
+      "id": "contact",
+      "type": "contact",
+      "visible": true,
+      "heading": "Nog een vraag voor u boekt?",
+      "body": "Stuur gerust een bericht. Buiten het seizoen antwoorden we meestal dezelfde dag.",
+      "buttonLabel": "Stuur een bericht"
+    }
+  ]
+}
