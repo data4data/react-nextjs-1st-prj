@@ -3,7 +3,7 @@
 import { useActionState, useEffect, useId, useRef, useState } from "react";
 import { toast } from "sonner";
 
-import { emptyContactState, submitContact } from "@/app/actions/contact";
+import { submitContact } from "@/app/actions/contact";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { emptyActionState } from "@/lib/cms/action-state";
 
 type ContactModalProps = {
   triggerLabel: string;
@@ -39,7 +40,7 @@ export function ContactModal({
   size = "default",
 }: ContactModalProps) {
   const [open, setOpen] = useState(false);
-  const [state, formAction, isPending] = useActionState(submitContact, emptyContactState);
+  const [state, formAction, isPending] = useActionState(submitContact, emptyActionState);
   const formRef = useRef<HTMLFormElement>(null);
   const fieldId = useId();
 

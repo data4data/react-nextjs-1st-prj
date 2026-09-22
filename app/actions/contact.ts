@@ -4,8 +4,6 @@ import { contactMessageSchema } from "@/lib/cms/schema";
 import { addMessage } from "@/lib/cms/repository";
 import type { ActionResult } from "@/lib/cms/types";
 
-export const emptyContactState: ActionResult = { ok: false, message: "" };
-
 /**
  * Runs on the server, even though the form in the browser calls it directly.
  *
