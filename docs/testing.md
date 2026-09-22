@@ -72,10 +72,14 @@ On **http://localhost:3000/veluwse-hei/settings**:
 
 - Change **Naam van de website** and press **Opslaan**. Open `/veluwse-hei` in a
   second tab: the new name is in the header and in the browser tab title.
-- Change the **secundaire kleur** to something bright and save. The stripes
-  behind the sections and the footer follow. No component was edited.
-- Change the **primaire kleur**. Buttons, links and focus rings change, and so
-  does the button inside the contact modal.
+- Under **Kleuren**, click one of the small colour squares for the **secundaire
+  kleur** and save. The stripes behind the sections and the footer follow. No
+  component was edited.
+- Want a colour that is not in the row? Click the big square on the left. Your
+  operating system's colour picker opens, and it has a field for an exact code
+  if a brand colour was given to you as `#1f6f8b`.
+- Do the same for the **primaire kleur**. Buttons, links and focus rings change,
+  and so does the button inside the contact modal.
 - Change **Icoon naast de naam** to the tent and save. The icon in the top bar
   changes. The CMS can only offer four icons, because the schema only allows
   four; it can never point at a picture that is missing.
