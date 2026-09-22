@@ -14,7 +14,7 @@ browser and a few clicks:
 - [ ] Log in and out through the real form (not with a handmade cookie).
 - [ ] Look at every section at 375px, 768px and 1280px.
 
-Steps for all of these are in the README under "Testing it by hand".
+Steps for all of these are in [testing.md](testing.md).
 
 ## Missing in the CMS
 
