@@ -13,14 +13,9 @@ export default function NavBar(){
                     Job tracker
                 </Link>
                 <div className="flex items-center gap-4">
-                    <Link href="/sign-in">
+                    <Link href="/login">
                         <Button variant="ghost" className="text-gray-700 hover:text-black">
                             Log in
-                        </Button>
-                    </Link>
-                    <Link href="/sign-up">
-                        <Button className="bg-primary hover:bg-primary/90">
-                            Start for free
                         </Button>
                     </Link>
                 </div>
