@@ -14,8 +14,11 @@ type SectionShellProps = {
  *
  * Sections never set these themselves. Because the striped background is
  * decided by the position in the rendered list, hiding a section in the CMS can
- * never leave two grey blocks next to each other, and removing one never leaves
- * a double gap.
+ * never leave two tinted blocks next to each other, and removing one never
+ * leaves a double gap.
+ *
+ * The stripe uses `bg-section-tint`, a pale wash of the secondary color from
+ * the CMS, so that color is visible on the page instead of sitting unused.
  */
 export function SectionShell({ id, index, bleed = false, children }: SectionShellProps) {
   const striped = index % 2 === 1;
@@ -25,7 +28,7 @@ export function SectionShell({ id, index, bleed = false, children }: SectionShel
       id={id}
       className={cn(
         "scroll-mt-16",
-        striped ? "bg-muted/40" : "bg-background",
+        striped ? "bg-section-tint" : "bg-background",
         !bleed && "py-16 sm:py-24"
       )}
     >

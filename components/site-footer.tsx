@@ -6,7 +6,7 @@ import type { Site } from "@/lib/cms/types";
  */
 export function SiteFooter({ footer, siteName }: { footer: Site["footer"]; siteName: string }) {
   return (
-    <footer className="border-t bg-muted/40">
+    <footer className="border-t bg-section-tint">
       <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 px-4 py-10 sm:flex-row sm:items-start sm:justify-between">
         <div className="max-w-prose">
           <p className="font-semibold">{siteName}</p>
