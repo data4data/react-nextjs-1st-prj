@@ -5,7 +5,7 @@ import { ArrowDown, ArrowUp, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 
 import { saveSiteAction } from "@/app/actions/site";
-import { TextAreaField, TextField } from "@/components/dashboard/fields";
+import { ColorField, TextAreaField, TextField } from "@/components/dashboard/fields";
 import { sectionFormRegistry, sectionLabels } from "@/components/dashboard/section-forms";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -79,6 +79,31 @@ export function SiteEditor({ initialSite }: { initialSite: Site }) {
             rows={2}
             onChange={(description) => setSite({ ...site, description })}
           />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Kleuren</CardTitle>
+        </CardHeader>
+        <CardContent className="grid gap-4 sm:grid-cols-2">
+          <ColorField
+            label="Primaire kleur (knoppen en accenten)"
+            value={site.theme.primary}
+            onChange={(primary) => setSite({ ...site, theme: { ...site.theme, primary } })}
+          />
+          <ColorField
+            label="Secundaire kleur"
+            value={site.theme.secondary}
+            onChange={(secondary) =>
+              setSite({ ...site, theme: { ...site.theme, secondary } })
+            }
+          />
+
+          <p className="text-sm text-muted-foreground sm:col-span-2">
+            De kleuren worden als CSS-variabelen op de website gezet. Geen enkel
+            component hoeft daarvoor aangepast te worden.
+          </p>
         </CardContent>
       </Card>
 

@@ -40,6 +40,43 @@ export function TextField({
   );
 }
 
+/**
+ * A color picker plus the hex code as text, because typing a brand color is
+ * often faster than finding it in the picker.
+ */
+export function ColorField({
+  label,
+  value,
+  onChange,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}) {
+  const id = useId();
+
+  return (
+    <div className="grid gap-2">
+      <Label htmlFor={id}>{label}</Label>
+      <div className="flex items-center gap-3">
+        <input
+          id={id}
+          type="color"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          className="size-9 cursor-pointer rounded-md border bg-background p-1"
+        />
+        <Input
+          value={value}
+          aria-label={`${label} als hexcode`}
+          className="font-mono"
+          onChange={(event) => onChange(event.target.value)}
+        />
+      </div>
+    </div>
+  );
+}
+
 export function TextAreaField({
   label,
   value,
