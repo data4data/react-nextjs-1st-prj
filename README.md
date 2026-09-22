@@ -183,6 +183,8 @@ Pages, sections and forms stay exactly as they are.
 - [`docs/learning-plan.md`](docs/learning-plan.md) — short lessons on server and
   client components, events, server actions, validation, cookies and caching,
   each tied to a real file in this project.
+- [`docs/todo.md`](docs/todo.md) — what is not done yet, and what was left for
+  later on purpose.
 
 The documentation for the exact installed Next.js version sits in
 `node_modules/next/dist/docs/`. Use it instead of blog posts: several things
