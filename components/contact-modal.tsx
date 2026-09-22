@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useId, useRef, useState } from "react";
+import { useActionState, useId, useRef, useState } from "react";
 import { toast } from "sonner";
 
 import { submitContact } from "@/app/actions/contact";
@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { emptyActionState } from "@/lib/cms/action-state";
+import type { ActionResult } from "@/lib/cms/types";
 
 type ContactModalProps = {
   triggerLabel: string;
@@ -40,22 +41,30 @@ export function ContactModal({
   size = "default",
 }: ContactModalProps) {
   const [open, setOpen] = useState(false);
-  const [state, formAction, isPending] = useActionState(submitContact, emptyActionState);
   const formRef = useRef<HTMLFormElement>(null);
   const fieldId = useId();
 
-  // Runs after the server action answered.
-  useEffect(() => {
-    if (!state.message) return;
+  /**
+   * The toast and the closing happen here, right where the server answered,
+   * instead of in a `useEffect` that watches the result. An effect would run
+   * after an extra render and would fire again on every unrelated re-render.
+   */
+  const [state, formAction, isPending] = useActionState(
+    async (previous: ActionResult, formData: FormData) => {
+      const result = await submitContact(previous, formData);
 
-    if (state.ok) {
-      toast.success(state.message);
-      formRef.current?.reset();
-      setOpen(false);
-    } else {
-      toast.error(state.message);
-    }
-  }, [state]);
+      if (result.ok) {
+        toast.success(result.message);
+        formRef.current?.reset();
+        setOpen(false);
+      } else {
+        toast.error(result.message);
+      }
+
+      return result;
+    },
+    emptyActionState
+  );
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
