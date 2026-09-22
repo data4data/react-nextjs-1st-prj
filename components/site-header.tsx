@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { TreePine } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { ContactModal } from "@/components/contact-modal";
 import type { Site } from "@/lib/cms/types";
 
 /**
@@ -20,9 +20,7 @@ export function SiteHeader({ header }: { header: Site["header"] }) {
           <span className="truncate">{header.logoText}</span>
         </Link>
 
-        <Button size="lg" render={<a href="#contact" />}>
-          {header.ctaLabel}
-        </Button>
+        <ContactModal triggerLabel={header.ctaLabel} size="lg" />
       </div>
     </header>
   );

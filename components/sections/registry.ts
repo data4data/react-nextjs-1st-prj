@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 
 import { CarouselSection } from "@/components/sections/carousel-section";
+import { ContactSection } from "@/components/sections/contact-section";
 import { InfoSection } from "@/components/sections/info-section";
 import { TabsSection } from "@/components/sections/tabs-section";
 import type { Section, SectionType } from "@/lib/cms/types";
@@ -28,4 +29,5 @@ export const sectionRegistry: SectionRegistry = {
   carousel: CarouselSection,
   info: InfoSection,
   tabs: TabsSection,
+  contact: ContactSection,
 };
