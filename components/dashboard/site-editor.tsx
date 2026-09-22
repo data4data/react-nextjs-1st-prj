@@ -119,7 +119,7 @@ export function SiteEditor({ initialSite }: { initialSite: Site }) {
             onChange={(primary) => setSite({ ...site, theme: { ...site.theme, primary } })}
           />
           <ColorField
-            label="Secundaire kleur"
+            label="Secundaire kleur (banen achter de secties)"
             value={site.theme.secondary}
             onChange={(secondary) =>
               setSite({ ...site, theme: { ...site.theme, secondary } })

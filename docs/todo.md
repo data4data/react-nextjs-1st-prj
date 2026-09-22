@@ -42,6 +42,12 @@ hand.
       site yet, even though each message stores which site it came from.
 - [ ] `alt` text for images is not editable; the slider uses the slide title and
       the tabs use an empty `alt`.
+- [ ] A colour is chosen, never typed. An exact brand code has to go through the
+      operating system's picker. A paste field that only accepts `#rrggbb`, with
+      its own error message, would be friendlier.
+- [ ] The save action returns errors per field (`theme.primary`), but the
+      settings screen only shows the general message in a toast. Nothing points
+      at the field that is wrong.
 - [ ] No tests. A first one could check that `getSite()` rejects a broken JSON
       file, and that it returns `null` for a slug with a `/` in it.
 
