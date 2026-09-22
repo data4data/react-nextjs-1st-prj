@@ -1,18 +1,24 @@
-# Recreatiepark De Veluwse Hei
+# Recreatiepark CMS
 
-A one-page website for a Dutch recreation park, where **all content comes from a
+One-page websites for Dutch recreation parks, where **all content comes from a
 CMS** instead of being written into the code.
 
 An admin logs in, changes the text, the colors, the order of the sections, and
 the public page changes. Visitors see only the website; they never see the CMS.
 
+There are **two example parks running on the same code**: a forest park and a
+park by the sea. Everything that differs between them lives in one JSON file
+each, so a third park is a third file and no new code.
+
 Built with Next.js 16 (App Router), Tailwind CSS v4 and shadcn/ui.
 
 | Page | URL |
 | --- | --- |
-| Public website | http://localhost:3000 |
+| List of websites | http://localhost:3000 |
+| De Veluwse Hei (forest) | http://localhost:3000/veluwse-hei |
+| Zeeduin (sea) | http://localhost:3000/zeeduin |
+| Settings for one site | http://localhost:3000/veluwse-hei/settings |
 | Login | http://localhost:3000/login |
-| CMS edit screen | http://localhost:3000/dashboard |
 
 ## Quick start
 
@@ -57,17 +63,20 @@ DEMO_PASSWORD=pick-your-own-password
 ## Where things are
 
 ```
-data/site.json          all the content. Edit it here or through the CMS.
+data/sites/zeeduin.json      all the content of one website
    |
-lib/cms/repository.ts   the only file that knows where the content is stored
+lib/cms/repository.ts        the only file that knows where content is stored
    |
-app/(site)/page.tsx     reads the content
+app/(site)/[site]/page.tsx   reads the content for the slug in the URL
    |
-components/sections/    draws it
+components/sections/         draws it
 ```
 
-The full folder map, the content model and the recipe for adding a new section
-type are in [`docs/plan.md`](docs/plan.md).
+`[site]` in a folder name means that part of the URL changes: `/zeeduin` and
+`/veluwse-hei` are the same file, rendered with different content.
+
+The full folder map, the content model and the recipes for adding a website or
+a new section type are in [`docs/plan.md`](docs/plan.md).
 
 ## Documentation
 
@@ -84,7 +93,7 @@ changed in Next 16, such as `middleware.ts` becoming `proxy.ts`.
 
 ## Good to know
 
-- There is no database. The content lives in `data/site.json`, behind async
+- There is no database. The content lives in `data/sites/*.json`, behind async
   functions shaped like an API, so a real backend can replace them later.
 - The login is a demo with one account from `.env.local`. A real product would
   use a library such as Auth.js or Clerk.

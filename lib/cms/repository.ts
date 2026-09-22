@@ -1,48 +1,98 @@
 import { randomUUID } from "node:crypto";
-import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { cache } from "react";
 
-import { contactMessageSchema, siteSchema } from "./schema";
-import type { ContactMessage, Site, StoredMessage } from "./types";
+import { contactMessageSchema, siteSchema, slugSchema } from "./schema";
+import type { ContactMessage, Site, SiteSummary, StoredMessage } from "./types";
 
 /**
  * The only place that knows where the content is stored.
  *
- * Today that is a JSON file on disk. When a real backend arrives, only the
- * bodies of these functions change to `fetch(...)` calls; every page, section
- * and form keeps working unchanged. That is why they are already async.
+ * Today that is one JSON file per website in `data/sites/`. When a real backend
+ * arrives, only the bodies of these functions change to `fetch(...)` calls;
+ * every page, section and form keeps working unchanged. That is why they are
+ * already async.
  */
 
 const DATA_DIR = path.join(process.cwd(), "data");
-const SITE_FILE = path.join(DATA_DIR, "site.json");
+const SITES_DIR = path.join(DATA_DIR, "sites");
 const MESSAGES_FILE = path.join(DATA_DIR, "messages.local.json");
 
 /**
- * `cache` keeps the result for the duration of one request, so the layout and
- * the page can both call `getSite()` while the file is only read once.
+ * Turns a slug into a file path, and refuses anything that is not a slug.
+ *
+ * The slug arrives from the URL, so a visitor fully controls it. Without this
+ * check a request for `/..%2F..%2Fetc%2Fpasswd` would be joined straight into a
+ * path and read a file outside `data/sites/`.
  */
-export const getSite = cache(async (): Promise<Site> => {
-  const raw = await readFile(SITE_FILE, "utf8");
+function siteFile(slug: string): string | null {
+  return slugSchema.safeParse(slug).success
+    ? path.join(SITES_DIR, `${slug}.json`)
+    : null;
+}
+
+/**
+ * `cache` keeps the result for the duration of one request, so the layout and
+ * the page can both call `getSite("zeeduin")` while the file is read once.
+ *
+ * Returns `null` for a slug that does not exist, so the page can answer with a
+ * 404 instead of crashing.
+ */
+export const getSite = cache(async (slug: string): Promise<Site | null> => {
+  const file = siteFile(slug);
+  if (!file) return null;
+
+  let raw: string;
+
+  try {
+    raw = await readFile(file, "utf8");
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return null;
+    throw error;
+  }
+
   const parsed = siteSchema.safeParse(JSON.parse(raw));
 
   if (!parsed.success) {
-    throw new Error(`site.json does not match the schema: ${parsed.error.message}`);
+    throw new Error(`${slug}.json does not match the schema: ${parsed.error.message}`);
   }
 
   return parsed.data;
 });
 
-export async function saveSite(site: Site): Promise<Site> {
+/** Every website in the CMS, for the index page and for `generateStaticParams`. */
+export const listSites = cache(async (): Promise<SiteSummary[]> => {
+  const files = await readdir(SITES_DIR);
+  const slugs = files.filter((file) => file.endsWith(".json")).map((file) => file.slice(0, -5));
+
+  const sites = await Promise.all(slugs.map((slug) => getSite(slug)));
+
+  return sites
+    .filter((site): site is Site => site !== null)
+    .map(({ slug, title, description, theme }) => ({ slug, title, description, theme }))
+    .sort((a, b) => a.title.localeCompare(b.title, "nl"));
+});
+
+export async function saveSite(slug: string, site: Site): Promise<Site> {
+  const file = siteFile(slug);
+
+  if (!file) {
+    throw new Error(`Refusing to save to an invalid slug: ${slug}`);
+  }
+
   const parsed = siteSchema.safeParse(site);
 
   if (!parsed.success) {
     throw new Error(`Refusing to save invalid site content: ${parsed.error.message}`);
   }
 
-  await writeFile(SITE_FILE, `${JSON.stringify(parsed.data, null, 2)}\n`, "utf8");
+  // The slug in the URL wins, so an edited body can never overwrite another site.
+  const content: Site = { ...parsed.data, slug };
 
-  return parsed.data;
+  await writeFile(file, `${JSON.stringify(content, null, 2)}\n`, "utf8");
+
+  return content;
 }
 
 export async function addMessage(message: ContactMessage): Promise<StoredMessage> {

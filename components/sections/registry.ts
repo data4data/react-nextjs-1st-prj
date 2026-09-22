@@ -9,6 +9,8 @@ import type { Section, SectionType } from "@/lib/cms/types";
 export type SectionComponentProps<T extends Section = Section> = {
   section: T;
   index: number;
+  /** Which website this section belongs to. Most sections ignore it. */
+  siteSlug: string;
 };
 
 /**

@@ -21,6 +21,7 @@
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+  --color-section-tint: var(--section-tint);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -61,6 +62,12 @@
   --primary-foreground: oklch(1 0 0);
   --secondary: oklch(0.97 0 0);
   --secondary-foreground: oklch(0.145 0 0);
+  /*
+   * The background of every other section. It is the secondary color washed
+   * out against the page, so the stripes stay soft whatever color is picked.
+   * Because it is built with var(--secondary), it follows the CMS on its own.
+   */
+  --section-tint: color-mix(in oklch, var(--secondary) 14%, var(--background));
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);
   --accent: oklch(0.97 0 0);
@@ -95,6 +102,7 @@
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
+  --section-tint: color-mix(in oklch, var(--secondary) 14%, var(--background));
   --muted: oklch(0.269 0 0);
   --muted-foreground: oklch(0.708 0 0);
   --accent: oklch(0.269 0 0);

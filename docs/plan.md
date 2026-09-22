@@ -2,18 +2,26 @@
 
 ## What this project is
 
-A one-page website for a recreation park in the Netherlands.
+One-page websites for recreation parks in the Netherlands.
 
-The special part: the page is not written by hand. The header, the footer, the
-colors and every section come from **CMS data**. A logged-in admin opens
-`/dashboard`, changes the text, and the public page changes.
+The special part: the pages are not written by hand. The header, the footer, the
+colors and every section come from **CMS data**. A logged-in admin opens the
+settings screen, changes the text, and the public page changes.
 
-Two surfaces, one app:
+There are **two example parks**, running on exactly the same code. Everything
+that differs between them sits in a JSON file. That is the point: a third park
+is a third file, not a third codebase.
 
 | Surface | URL | Who uses it |
 | --- | --- | --- |
-| Public site | `/` | Visitors. No login. |
-| CMS | `/login`, `/dashboard` | The park owner. Login needed. |
+| List of websites | `/` | The front door of the demo |
+| Public site | `/veluwse-hei`, `/zeeduin` | Visitors. No login. |
+| Settings for one site | `/veluwse-hei/settings` | The park owner. Login needed. |
+| Login | `/login` | |
+
+The word for this is **multi-tenant**: one program serving several customers,
+each with their own content. Here the tenant is the part of the URL that Next
+calls `[site]`, so `/zeeduin` loads `data/sites/zeeduin.json`.
 
 ## Stack
 
@@ -27,30 +35,33 @@ Two surfaces, one app:
 ## How data flows
 
 ```
-data/site.json
-  -> lib/cms/repository.ts    (async functions, shaped like a future API)
-  -> app/(site)/page.tsx      (Server Component, reads the data)
-  -> components/sections/*    (render it)
+data/sites/zeeduin.json
+  -> lib/cms/repository.ts        (async functions, shaped like a future API)
+  -> app/(site)/[site]/page.tsx   (Server Component, reads the data)
+  -> components/sections/*        (render it)
 
-dashboard form
-  -> saveSite server action   (checks login, validates, writes the JSON)
-  -> revalidatePath("/")      (public page shows the new content)
+settings form
+  -> saveSite server action       (checks login, validates, writes the JSON)
+  -> revalidatePath("/zeeduin")   (that one public page shows the new content)
 ```
+
+The slug travels the whole way: it comes out of the URL, picks the file, and
+goes back into `revalidatePath`, so saving one park never rebuilds the other.
 
 ## Why JSON and not MySQL
 
 `lib/cms/repository.ts` is the only file that knows where the data lives.
-Everything else just calls `getSite()` and gets an object back.
+Everything else just calls `getSite("zeeduin")` and gets an object back.
 
 So when a real backend arrives (Laravel + MySQL, or Next + Prisma), only the
 inside of those functions changes:
 
 ```ts
 // now
-const raw = await readFile(SITE_FILE, "utf8")
+const raw = await readFile(siteFile(slug), "utf8")
 
 // later
-const res = await fetch(`${process.env.API_URL}/site`)
+const res = await fetch(`${process.env.API_URL}/sites/${slug}`)
 ```
 
 The page, the sections and the dashboard stay exactly the same. That is the
@@ -60,43 +71,61 @@ whole point of putting the data behind functions.
 
 ```
 app/
-  layout.tsx            html, body, fonts, toaster. Nothing visual.
-  not-found.tsx         404 page
-  global-error.tsx      shown if the root layout itself crashes
-  (site)/               public website
-    layout.tsx          header + footer + theme colors
-    page.tsx            the one-pager
-    loading.tsx         skeleton while loading
-    error.tsx           error box for the public page
-  (cms)/                admin area
-    layout.tsx          cms shell with sign out
-    error.tsx           error box for the cms
-    login/page.tsx      -> /login
-    dashboard/page.tsx  -> /dashboard
-  actions/              server actions (contact, site, auth)
+  layout.tsx              html, body, fonts, toaster. Nothing visual.
+  page.tsx                -> /        the list of websites
+  not-found.tsx           404 page
+  global-error.tsx        shown if the root layout itself crashes
+  (site)/                 public websites
+    error.tsx             error box for the public page
+    [site]/
+      layout.tsx          header + footer + theme colors of one park
+      page.tsx            -> /zeeduin        the one-pager
+      loading.tsx         skeleton while loading
+  (cms)/                  admin area
+    layout.tsx            cms shell with sign out
+    error.tsx             error box for the cms
+    login/page.tsx        -> /login
+    [site]/settings/      -> /zeeduin/settings
+  actions/                server actions (contact, site, auth)
 
 components/
-  sections/             one file per section type + registry + shell
-  dashboard/            the edit forms
-  ui/                   shadcn components. Do not hand-edit.
+  sections/               one file per section type + registry + shell
+  dashboard/              the edit forms
+  ui/                     shadcn components. Do not hand-edit.
   site-header.tsx
   site-footer.tsx
   contact-modal.tsx
   error-state.tsx
 
 lib/
-  cms/                  types, zod schema, repository
-  auth/                 cookie session
+  cms/                    types, zod schema, repository
+  auth/                   cookie session
 
 data/
-  site.json             the content. Committed.
-  messages.local.json   contact messages. Not committed.
+  sites/veluwse-hei.json  one website. Committed.
+  sites/zeeduin.json      the other website. Committed.
+  messages.local.json     contact messages. Not committed.
 
-proxy.ts                blocks /dashboard when not logged in
+proxy.ts                  blocks /<site>/settings when not logged in
 ```
 
-A folder in brackets, like `(site)`, does **not** appear in the URL. It only
-groups routes so they can share a layout. `app/(site)/page.tsx` is still `/`.
+Two kinds of brackets, and they do opposite things:
+
+- A folder in round brackets, like `(site)`, does **not** appear in the URL. It
+  only groups routes so they can share a layout.
+- A folder in square brackets, like `[site]`, **is** a piece of the URL that
+  changes. `/zeeduin` and `/veluwse-hei` are the same file, rendered twice.
+
+So `app/(site)/[site]/page.tsx` is the URL `/zeeduin`: the `(site)` part is
+invisible, the `[site]` part is the slug.
+
+## How to add a new website
+
+1. Copy a file in `data/sites/` to `data/sites/duinhof.json`.
+2. Change `"slug"` inside it to `"duinhof"`, so it matches the file name.
+3. Change the title, the colors and the texts.
+
+It appears on `/` and on `/duinhof` at once. No code is touched.
 
 ## How to add a new section
 
@@ -106,7 +135,7 @@ Say you want a "gallery" section. Three files, and you never open `page.tsx`:
 2. `components/sections/gallery-section.tsx` — write the component.
 3. `components/sections/registry.ts` — add one line: `gallery: GallerySection`.
 
-Then add it to `data/site.json` (or from the dashboard). Done.
+Then add it to a file in `data/sites/` (or from the settings screen). Done.
 
 If you forget step 3, TypeScript shows an error. You cannot silently break the
 page.
@@ -120,7 +149,10 @@ hidden. So the page must look right with **any** mix.
   `SectionShell` does that, based on the position in the list that is actually
   rendered.
 - Because the striped background is counted while rendering, hiding a section
-  can never put two grey blocks next to each other.
+  can never put two tinted blocks next to each other.
+- The stripe is the **secondary color** washed out against the page, mixed in
+  CSS with `color-mix`. So the second color from the CMS is visible, and it
+  stays soft whatever color is picked.
 - Text from the CMS can be one word or one hundred. Text wraps, it never
   overflows.
 - Images have a fixed aspect ratio, so a tall photo cannot stretch the page.
@@ -133,8 +165,9 @@ The browser cannot decide who is logged in. Only the server can.
 
 Login form -> server action checks the email and password from `.env.local` ->
 server sets an httpOnly cookie, signed with a secret -> `proxy.ts` checks that
-cookie before letting anyone see `/dashboard` -> every server action checks it
-again before saving, because a gate at the door is not enough.
+cookie before letting anyone see a settings screen, and remembers where they
+were going in `?next=` -> every server action checks it again before saving,
+because a gate at the door is not enough.
 
 This is a demo login with one user from the env file. For a real product you
 would use a library such as Auth.js or Clerk.
@@ -154,10 +187,10 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000` for the site and `http://localhost:3000/login`
-for the CMS.
+Open `http://localhost:3000` for the list of websites, and
+`http://localhost:3000/login` for the CMS.
 
 ## Not in this branch
 
-Multi-tenant (many customers), MySQL, Laravel, seeders, drag and drop,
-image uploads, draft versus published, billing.
+MySQL, Laravel, seeders, drag and drop, image uploads, adding or deleting a
+website from the CMS, draft versus published, per-customer accounts, billing.

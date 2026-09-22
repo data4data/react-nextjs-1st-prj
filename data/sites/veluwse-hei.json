@@ -1,4 +1,5 @@
 {
+  "slug": "veluwse-hei",
   "title": "Recreatiepark De Veluwse Hei",
   "description": "Vakantiehuisjes, kamperen en natuur midden op de Veluwe. Boek een rustig verblijf tussen de bossen en heide.",
   "theme": {
@@ -7,6 +8,7 @@
   },
   "header": {
     "logoText": "De Veluwse Hei",
+    "logoIcon": "tree",
     "ctaLabel": "Neem contact op"
   },
   "footer": {

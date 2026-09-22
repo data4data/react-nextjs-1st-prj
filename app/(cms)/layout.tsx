@@ -15,7 +15,7 @@ export default async function CmsLayout({ children }: { children: React.ReactNod
     <div className="flex min-h-full flex-1 flex-col bg-muted/40">
       <header className="border-b bg-background">
         <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-4 px-4">
-          <Link href="/dashboard" className="text-sm font-semibold">
+          <Link href="/" className="text-sm font-semibold">
             Beheer
           </Link>
 
@@ -24,7 +24,7 @@ export default async function CmsLayout({ children }: { children: React.ReactNod
               href="/"
               className="text-sm text-muted-foreground hover:text-foreground"
             >
-              Bekijk de website
+              Alle websites
             </Link>
 
             {user ? (

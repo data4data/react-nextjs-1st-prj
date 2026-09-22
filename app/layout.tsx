@@ -13,15 +13,19 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+/**
+ * A fallback only. Each website sets its own title and description in
+ * `app/(site)/[site]/layout.tsx`, from the CMS.
+ */
 export const metadata: Metadata = {
-  title: "Recreatiepark De Veluwse Hei",
-  description: "Vakantiehuisjes, kamperen en natuur midden op de Veluwe.",
+  title: "Websites",
+  description: "Websites die in dit CMS staan.",
 };
 
 /**
  * The root layout wraps every route, including the CMS. It stays free of any
- * site chrome so the public header and footer never appear on /login or
- * /dashboard. Those live in the (site) route group instead.
+ * site chrome so a park's header and footer never appear on /login or on a
+ * settings screen. Those live in the (site) route group instead.
  */
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
