@@ -27,7 +27,7 @@ hand.
 - [ ] Add and delete slides in the slider.
 - [ ] Add and delete tabs.
 - [ ] Add and delete footer links.
-- [ ] Upload images (the image is a path you type, such as `/hero-images/hero1.png`).
+- [ ] Upload images (the image is a path you type, such as `/hero-images/veluwe1.png`).
 - [ ] See the received contact messages in the CMS.
 - [ ] A preview of the page before saving.
 
