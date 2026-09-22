@@ -32,6 +32,13 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
+
+# local cms data (contact messages)
+data/*.local.json
+
+# editors
+.idea
 
 # vercel
 .vercel

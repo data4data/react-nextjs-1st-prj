@@ -13,6 +13,15 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    // components/ui is written by the shadcn CLI and is replaced whenever a
+    // component is re-added, so it is not hand-edited. The carousel primitive
+    // sets state inside an effect on purpose, to follow the embla API.
+    files: ["components/ui/**"],
+    rules: {
+      "react-hooks/set-state-in-effect": "off",
+    },
+  },
 ]);
 
 export default eslintConfig;
