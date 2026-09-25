@@ -4,7 +4,7 @@
   "description": "Strandhuisjes en duinkamperen aan de Zeeuwse kust. Wakker worden met de zee voor de deur.",
   "theme": {
     "primary": "#1f6f8b",
-    "secondary": "#e2714a"
+    "secondary": "#c9a227"
   },
   "header": {
     "logoText": "Zeeduin",
@@ -13,13 +13,18 @@
   },
   "footer": {
     "text": "Strandpark Zeeduin, Duinweg 3, 4356 CA Oostkapelle",
-    "links": [{ "label": "Contact", "href": "#contact" }]
+    "links": [
+      {
+        "label": "Contact",
+        "href": "#contact"
+      }
+    ]
   },
   "sections": [
     {
       "id": "hero",
-      "type": "carousel",
       "visible": true,
+      "type": "carousel",
       "slides": [
         {
           "image": "/hero-images/duin1.png",
@@ -35,8 +40,8 @@
     },
     {
       "id": "verblijf",
-      "type": "tabs",
       "visible": true,
+      "type": "tabs",
       "heading": "Wat u bij ons vindt",
       "orientation": "vertical",
       "items": [
@@ -62,15 +67,15 @@
     },
     {
       "id": "info",
-      "type": "info",
       "visible": false,
+      "type": "info",
       "heading": "Het seizoen 2027",
       "body": "Deze sectie staat op verborgen. Zet hem aan in de instellingen en hij verschijnt op de website, op precies deze plek in de rij."
     },
     {
       "id": "contact",
-      "type": "contact",
       "visible": true,
+      "type": "contact",
       "heading": "Nog een vraag voor u boekt?",
       "body": "Stuur gerust een bericht. Buiten het seizoen antwoorden we meestal dezelfde dag.",
       "buttonLabel": "Stuur een bericht"

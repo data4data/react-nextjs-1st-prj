@@ -3,8 +3,8 @@
   "title": "Recreatiepark De Veluwse Hei",
   "description": "Vakantiehuisjes, kamperen en natuur midden op de Veluwe. Boek een rustig verblijf tussen de bossen en heide.",
   "theme": {
-    "primary": "#2f6f4e",
-    "secondary": "#e8b04b"
+    "primary": "#3c4f76",
+    "secondary": "#b03a2e"
   },
   "header": {
     "logoText": "De Veluwse Hei",
@@ -14,16 +14,25 @@
   "footer": {
     "text": "Recreatiepark De Veluwse Hei, Heideweg 12, 7361 AB Beekbergen",
     "links": [
-      { "label": "Openingstijden", "href": "#info" },
-      { "label": "Verblijf", "href": "#verblijf" },
-      { "label": "Contact", "href": "#contact" }
+      {
+        "label": "Openingstijden",
+        "href": "#info"
+      },
+      {
+        "label": "Verblijf",
+        "href": "#verblijf"
+      },
+      {
+        "label": "Contact",
+        "href": "#contact"
+      }
     ]
   },
   "sections": [
     {
       "id": "hero",
-      "type": "carousel",
       "visible": true,
+      "type": "carousel",
       "slides": [
         {
           "image": "/hero-images/veluwe1.png",
@@ -44,15 +53,15 @@
     },
     {
       "id": "info",
-      "type": "info",
       "visible": true,
+      "type": "info",
       "heading": "Een rustig park, midden in de natuur",
       "body": "De Veluwse Hei ligt op tien minuten fietsen van Beekbergen, tussen bos en heide. Het park telt veertig huisjes en zestig kampeerplaatsen, dus het blijft er overzichtelijk en stil. Auto's parkeert u aan de rand, zodat kinderen overal vrij kunnen spelen. In het hoogseizoen is de receptie dagelijks open van 08:00 tot 20:00 uur."
     },
     {
       "id": "verblijf",
-      "type": "tabs",
       "visible": true,
+      "type": "tabs",
       "heading": "Verblijf en voorzieningen",
       "orientation": "horizontal",
       "items": [
@@ -78,8 +87,8 @@
     },
     {
       "id": "contact",
-      "type": "contact",
       "visible": true,
+      "type": "contact",
       "heading": "Vragen over uw verblijf?",
       "body": "Stuur ons een bericht en we reageren binnen een werkdag. Liever bellen? Dat kan op werkdagen tussen 09:00 en 17:00 uur.",
       "buttonLabel": "Stuur een bericht"
