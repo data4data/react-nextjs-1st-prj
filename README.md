@@ -44,11 +44,17 @@ openssl rand -hex 32   # generate a secret and paste it as AUTH_SECRET
 
 ```env
 AUTH_SECRET=<the long random string you just generated>
-DEMO_EMAIL=admin@veluwsehei.nl
-DEMO_PASSWORD=pick-your-own-password
+DEMO_EMAIL=admin@test.nl
+DEMO_PASSWORD=admin
 ```
 
 `DEMO_EMAIL` and `DEMO_PASSWORD` are the one account that can open the CMS.
+They are deliberately easy to type for a local demo. Pick something real before
+putting this anywhere other people can reach.
+
+`AUTH_SECRET` is a different thing: it signs the session cookie. Keep it long
+and random, or someone could make themselves a valid cookie without ever
+knowing the password.
 
 ## Commands
 
