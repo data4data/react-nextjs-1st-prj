@@ -6,8 +6,8 @@ import { ArrowDown, ArrowUp, Eye, EyeOff, Sun, Tent, TreePine, Waves } from "luc
 import { toast } from "sonner";
 
 import { saveSiteAction } from "@/app/actions/site";
-import { ColorField, TextAreaField, TextField } from "@/components/dashboard/fields";
-import { sectionFormRegistry, sectionLabels } from "@/components/dashboard/section-forms";
+import { ColorField, TextAreaField, TextField } from "@/components/settings/fields";
+import { sectionFormRegistry, sectionLabels } from "@/components/settings/section-forms";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";

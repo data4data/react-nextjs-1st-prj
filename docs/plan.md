@@ -64,7 +64,7 @@ const raw = await readFile(siteFile(slug), "utf8")
 const res = await fetch(`${process.env.API_URL}/sites/${slug}`)
 ```
 
-The page, the sections and the dashboard stay exactly the same. That is the
+The page, the sections and the edit forms stay exactly the same. That is the
 whole point of putting the data behind functions.
 
 ## Folder map
@@ -90,7 +90,7 @@ app/
 
 components/
   sections/               one file per section type + registry + shell
-  dashboard/              the edit forms
+  settings/               the edit forms
   ui/                     shadcn components. Do not hand-edit.
   site-header.tsx
   site-footer.tsx

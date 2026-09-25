@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-import { SiteEditor } from "@/components/dashboard/site-editor";
+import { SiteEditor } from "@/components/settings/site-editor";
 import { requireUser } from "@/lib/auth/session";
 import { getSite } from "@/lib/cms/repository";
 
