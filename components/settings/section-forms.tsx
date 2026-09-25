@@ -2,7 +2,7 @@
 
 import type { ComponentType } from "react";
 
-import { TextAreaField, TextField } from "@/components/dashboard/fields";
+import { TextAreaField, TextField } from "@/components/settings/fields";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
