@@ -1,29 +1,14 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import { redirect } from "next/navigation";
 
-import { SiteEditor } from "@/components/settings/site-editor";
-import { requireUser } from "@/lib/auth/session";
-import { getSite } from "@/lib/cms/repository";
+import { loadSettingsSite } from "@/lib/cms/load-settings-site";
 
-export async function generateMetadata({
+/**
+ * `/veluwse-hei/settings` has no form of its own. It sends you to Algemeen.
+ */
+export default async function SettingsIndexPage({
   params,
-}: PageProps<"/[site]/settings">): Promise<Metadata> {
+}: PageProps<"/[site]/settings">) {
   const { site: slug } = await params;
-  const site = await getSite(slug);
-
-  return { title: site ? `Instellingen — ${site.title}` : "Instellingen" };
-}
-
-/** The edit screen for one website. */
-export default async function SettingsPage({ params }: PageProps<"/[site]/settings">) {
-  // proxy.ts already blocked anonymous visitors; this makes the page itself
-  // safe too, no matter how it is reached.
-  await requireUser();
-
-  const { site: slug } = await params;
-  const site = await getSite(slug);
-
-  if (!site) notFound();
-
-  return <SiteEditor initialSite={site} />;
+  await loadSettingsSite(slug);
+  redirect(`/${slug}/settings/general`);
 }

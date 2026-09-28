@@ -14,7 +14,7 @@ export default async function CmsLayout({ children }: { children: React.ReactNod
   return (
     <div className="flex min-h-full flex-1 flex-col bg-muted/40">
       <header className="border-b bg-background">
-        <div className="mx-auto flex h-14 w-full max-w-5xl items-center justify-between gap-4 px-4">
+        <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-4 px-4">
           <Link href="/" className="text-sm font-semibold">
             Beheer
           </Link>
@@ -43,7 +43,7 @@ export default async function CmsLayout({ children }: { children: React.ReactNod
         </div>
       </header>
 
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">{children}</main>
+      <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8">{children}</main>
     </div>
   );
 }

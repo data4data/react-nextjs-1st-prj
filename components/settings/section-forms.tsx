@@ -14,6 +14,9 @@ import type {
   SectionType,
   TabsSectionData,
 } from "@/lib/cms/types";
+import { sectionLabels } from "@/lib/cms/section-labels";
+
+export { sectionLabels };
 
 /**
  * One edit form per section type, looked up the same way the website looks up
@@ -198,12 +201,4 @@ export const sectionFormRegistry: SectionFormRegistry = {
   info: InfoForm,
   tabs: TabsForm,
   contact: ContactForm,
-};
-
-/** Friendly names for the section headings in the CMS. */
-export const sectionLabels: Record<SectionType, string> = {
-  carousel: "Slider",
-  info: "Tekstblok",
-  tabs: "Tabs",
-  contact: "Contact",
 };
