@@ -1,3 +1,5 @@
+"use client";
+
 import type { ComponentType } from "react";
 
 import { sectionRegistry, type SectionComponentProps } from "@/components/sections/registry";

@@ -2,10 +2,8 @@
 
 import type { ComponentType } from "react";
 
-import { TextAreaField, TextField } from "@/components/settings/fields";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
+import { SelectField, TextAreaField, TextField } from "@/components/settings/fields";
+import { SettingsCard } from "@/components/settings/settings-card";
 import type {
   CarouselSectionData,
   ContactSectionData,
@@ -14,6 +12,9 @@ import type {
   SectionType,
   TabsSectionData,
 } from "@/lib/cms/types";
+import { sectionLabels } from "@/lib/cms/section-labels";
+
+export { sectionLabels };
 
 /**
  * One edit form per section type, looked up the same way the website looks up
@@ -35,31 +36,31 @@ function CarouselForm({ section, onChange }: FormProps<CarouselSectionData>) {
   }
 
   return (
-    <div className="grid gap-6">
+    <div className="grid gap-4">
       {section.slides.map((slide, index) => (
-        <div key={index} className="grid gap-4">
-          {index > 0 ? <Separator /> : null}
-          <p className="text-sm font-medium text-muted-foreground">
-            Slide {index + 1}
-          </p>
-          <TextField
-            label="Titel"
-            value={slide.title}
-            onChange={(title) => updateSlide(index, { title })}
-          />
-          <TextAreaField
-            label="Tekst"
-            value={slide.text}
-            rows={2}
-            onChange={(text) => updateSlide(index, { text })}
-          />
-          <TextField
-            label="Afbeelding"
-            value={slide.image}
-            placeholder="/hero-images/veluwe1.png"
-            onChange={(image) => updateSlide(index, { image })}
-          />
-        </div>
+        <SettingsCard key={index} title={`Slide ${index + 1}`}>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <TextField
+              label="Titel"
+              value={slide.title}
+              onChange={(title) => updateSlide(index, { title })}
+            />
+            <TextField
+              label="Afbeelding"
+              value={slide.image}
+              placeholder="/hero-images/veluwe1.png"
+              onChange={(image) => updateSlide(index, { image })}
+            />
+            <div className="sm:col-span-2">
+              <TextAreaField
+                label="Tekst"
+                value={slide.text}
+                rows={2}
+                onChange={(text) => updateSlide(index, { text })}
+              />
+            </div>
+          </div>
+        </SettingsCard>
       ))}
     </div>
   );
@@ -67,19 +68,21 @@ function CarouselForm({ section, onChange }: FormProps<CarouselSectionData>) {
 
 function InfoForm({ section, onChange }: FormProps<InfoSectionData>) {
   return (
-    <div className="grid gap-4">
-      <TextField
-        label="Kop"
-        value={section.heading}
-        onChange={(heading) => onChange({ ...section, heading })}
-      />
-      <TextAreaField
-        label="Tekst"
-        value={section.body}
-        rows={6}
-        onChange={(body) => onChange({ ...section, body })}
-      />
-    </div>
+    <SettingsCard title="Kop en tekst">
+      <div className="grid gap-4">
+        <TextField
+          label="Kop"
+          value={section.heading}
+          onChange={(heading) => onChange({ ...section, heading })}
+        />
+        <TextAreaField
+          label="Tekst"
+          value={section.body}
+          rows={6}
+          onChange={(body) => onChange({ ...section, body })}
+        />
+      </div>
+    </SettingsCard>
   );
 }
 
@@ -99,68 +102,66 @@ function TabsForm({ section, onChange }: FormProps<TabsSectionData>) {
   }
 
   return (
-    <div className="grid gap-6">
-      <TextField
-        label="Kop"
-        value={section.heading}
-        onChange={(heading) => onChange({ ...section, heading })}
-      />
-      <TextAreaField
-        label="Introtekst naast de kop"
-        value={section.intro}
-        rows={2}
-        onChange={(intro) => onChange({ ...section, intro })}
-      />
-
-      <div className="grid gap-2">
-        <Label>Weergave van de tabs</Label>
-        <div className="flex flex-wrap gap-2">
-          {tabsLayouts.map(({ value, label }) => (
-            <Button
-              key={value}
-              type="button"
-              variant={section.layout === value ? "default" : "outline"}
-              onClick={() => onChange({ ...section, layout: value })}
-            >
-              {label}
-            </Button>
-          ))}
-        </div>
-      </div>
-
-      {section.items.map((item, index) => (
-        <div key={index} className="grid gap-4">
-          <Separator />
-          <p className="text-sm font-medium text-muted-foreground">Tab {index + 1}</p>
-          <TextField
-            label="Tablabel"
-            value={item.label}
-            onChange={(label) => updateItem(index, { label })}
-          />
+    <div className="grid gap-4">
+      <SettingsCard title="Algemeen">
+        <div className="grid gap-4 sm:grid-cols-2">
           <TextField
             label="Kop"
-            value={item.heading}
-            onChange={(heading) => updateItem(index, { heading })}
+            value={section.heading}
+            onChange={(heading) => onChange({ ...section, heading })}
           />
-          <TextAreaField
-            label="Tekst"
-            value={item.body}
-            rows={4}
-            onChange={(body) => updateItem(index, { body })}
+          <SelectField
+            label="Weergave van de tabs"
+            value={section.layout}
+            options={tabsLayouts}
+            onChange={(layout) => onChange({ ...section, layout })}
           />
-          <TextField
-            label="Kort regeltje met feiten"
-            value={item.meta ?? ""}
-            placeholder="300 m via vlonderpad · Strandtent maart–nov"
-            onChange={(meta) => updateItem(index, { meta: meta || undefined })}
-          />
-          <TextField
-            label="Afbeelding"
-            value={item.image ?? ""}
-            placeholder="/hero-images/veluwe1.png"
-            onChange={(image) => updateItem(index, { image: image || undefined })}
-          />
+          <div className="sm:col-span-2">
+            <TextAreaField
+              label="Introtekst naast de kop"
+              value={section.intro}
+              rows={2}
+              onChange={(intro) => onChange({ ...section, intro })}
+            />
+          </div>
         </div>
+      </SettingsCard>
+
+      {section.items.map((item, index) => (
+        <SettingsCard key={index} title={`Tab ${index + 1}`}>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <TextField
+              label="Tablabel"
+              value={item.label}
+              onChange={(label) => updateItem(index, { label })}
+            />
+            <TextField
+              label="Afbeelding"
+              value={item.image ?? ""}
+              placeholder="/hero-images/veluwe1.png"
+              onChange={(image) => updateItem(index, { image: image || undefined })}
+            />
+            <TextField
+              label="Kop"
+              value={item.heading}
+              onChange={(heading) => updateItem(index, { heading })}
+            />
+            <TextField
+              label="Kort regeltje met feiten"
+              value={item.meta ?? ""}
+              placeholder="300 m via vlonderpad · Strandtent maart–nov"
+              onChange={(meta) => updateItem(index, { meta: meta || undefined })}
+            />
+            <div className="sm:col-span-2">
+              <TextAreaField
+                label="Omschrijving"
+                value={item.body}
+                rows={4}
+                onChange={(body) => updateItem(index, { body })}
+              />
+            </div>
+          </div>
+        </SettingsCard>
       ))}
     </div>
   );
@@ -168,24 +169,28 @@ function TabsForm({ section, onChange }: FormProps<TabsSectionData>) {
 
 function ContactForm({ section, onChange }: FormProps<ContactSectionData>) {
   return (
-    <div className="grid gap-4">
-      <TextField
-        label="Kop"
-        value={section.heading}
-        onChange={(heading) => onChange({ ...section, heading })}
-      />
-      <TextAreaField
-        label="Tekst"
-        value={section.body}
-        rows={3}
-        onChange={(body) => onChange({ ...section, body })}
-      />
-      <TextField
-        label="Tekst op de knop"
-        value={section.buttonLabel}
-        onChange={(buttonLabel) => onChange({ ...section, buttonLabel })}
-      />
-    </div>
+    <SettingsCard title="Kop, tekst en knop">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <TextField
+          label="Kop"
+          value={section.heading}
+          onChange={(heading) => onChange({ ...section, heading })}
+        />
+        <TextField
+          label="Tekst op de knop"
+          value={section.buttonLabel}
+          onChange={(buttonLabel) => onChange({ ...section, buttonLabel })}
+        />
+        <div className="sm:col-span-2">
+          <TextAreaField
+            label="Tekst"
+            value={section.body}
+            rows={3}
+            onChange={(body) => onChange({ ...section, body })}
+          />
+        </div>
+      </div>
+    </SettingsCard>
   );
 }
 
@@ -198,12 +203,4 @@ export const sectionFormRegistry: SectionFormRegistry = {
   info: InfoForm,
   tabs: TabsForm,
   contact: ContactForm,
-};
-
-/** Friendly names for the section headings in the CMS. */
-export const sectionLabels: Record<SectionType, string> = {
-  carousel: "Slider",
-  info: "Tekstblok",
-  tabs: "Tabs",
-  contact: "Contact",
 };

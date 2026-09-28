@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 
 import { SectionShell } from "@/components/sections/section-shell";
@@ -13,8 +15,8 @@ import type { CarouselSectionData } from "@/lib/cms/types";
 /**
  * The hero slider.
  *
- * The carousel itself is a client component (it listens to drags and clicks),
- * but this wrapper stays a server component: it only arranges the slides.
+ * The carousel listens to drags and clicks, so this file is a client
+ * component. The slides still arrive as props; nothing is fetched here.
  *
  * Each slide has a fixed aspect ratio, so a tall or missing image can never
  * change the height of the page.

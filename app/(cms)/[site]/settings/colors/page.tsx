@@ -3,11 +3,14 @@ import { redirect } from "next/navigation";
 import { loadSettingsSite } from "@/lib/cms/load-settings-site";
 
 /**
- * `/veluwse-hei/settings` has no form of its own. It sends you to Algemeen.
+ * Kleuren used to be its own page. Name and colours now live together under
+ * Algemeen, so old bookmarks still land on the combined form.
  */
-export default async function SettingsIndexPage({
+export default async function ColorsSettingsPage({
   params,
-}: PageProps<"/[site]/settings">) {
+}: {
+  params: Promise<{ site: string }>;
+}) {
   const { site: slug } = await params;
   await loadSettingsSite(slug);
   redirect(`/${slug}/settings/general`);

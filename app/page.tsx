@@ -54,7 +54,12 @@ export default async function SitesPage() {
               {/* Links, not buttons: they navigate. `buttonVariants` gives them
                   the look of a button without pretending to be one. */}
               <div className="flex flex-wrap gap-2">
-                <Link href={`/${site.slug}`} className={buttonVariants({ size: "sm" })}>
+                <Link
+                  href={`/${site.slug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={buttonVariants({ size: "sm" })}
+                >
                   Bekijk website
                 </Link>
                 <Link

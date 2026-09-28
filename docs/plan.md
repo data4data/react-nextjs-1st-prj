@@ -82,17 +82,24 @@ app/
       page.tsx            -> /zeeduin        the one-pager
       loading.tsx         skeleton while loading
   (cms)/                  admin area
-    layout.tsx            cms shell with sign out
+    layout.tsx            grey cms chrome (no park header)
     error.tsx             error box for the cms
-    login/page.tsx        -> /login
+    login/                -> /login
+    [site]/layout.tsx     Beheer bar with the park name
     [site]/settings/      -> /zeeduin/settings
+      layout.tsx          sidebar + save bar
+      general/            name, description and colours together
+      header/ footer/     koptekst and voettekst
+      [sectionId]/        one page per content section
+      colors/             old URL; redirects to general
   actions/                server actions (contact, site, auth)
 
 components/
   sections/               one file per section type + registry + shell
     tabs/                 fotostrip and panels layouts for the tabs section
-  settings/               the edit forms
+  settings/               the edit forms, sidebar, preview and save bar
   ui/                     shadcn components. Do not hand-edit.
+  cms-header.tsx          Beheer bar (park name, Alle websites, Uitloggen)
   site-header.tsx
   site-footer.tsx
   contact-modal.tsx
@@ -162,6 +169,11 @@ hidden. So the page must look right with **any** mix.
 - If all sections are hidden, the page shows the header, the footer and a calm
   message. Never an empty white screen.
 
+`SectionRenderer` looks each section up in `components/sections/registry.ts`.
+That registry is a client file (the section components listen to clicks), so
+the renderer is a client component too. The page still only passes props; it
+does not fetch.
+
 ## Auth in one paragraph
 
 The browser cannot decide who is logged in. Only the server can.
@@ -195,7 +207,30 @@ npm run dev
 Open `http://localhost:3000` for the list of websites, and
 `http://localhost:3000/login` for the CMS.
 
+## Settings in the CMS
+
+The settings app has its own layout. A sidebar lists **Site** (Algemeen) and
+**Pagina** (Koptekst, each content section, Voettekst). Each page has
+**Voorbeeld** (how that part looks) and **Bewerken** (the form). Voorbeeld is
+the tab that opens first.
+
+Algemeen holds the park name, the description and both colours, so the preview
+shows identity and theme together. The old `/settings/colors` URL still works:
+it redirects there.
+
+On each content section in the sidebar, arrows change the order and an eye
+hides or shows the block on the public page. Hover explains the icons. Koptekst
+and Voettekst stay put: they are always the top and the bottom of the page.
+
+**Opslaan** sits in a bar at the bottom of the window. Changes are only live
+after a save. **Bekijk website** opens the public park in a new tab.
+
+Park colours stay on the public site and in the preview card. The CMS chrome
+stays grey on purpose, so a bad colour pick never makes the screen where you
+fix it unreadable.
+
 ## Not in this branch
 
-MySQL, Laravel, seeders, drag and drop, image uploads, adding or deleting a
-website from the CMS, draft versus published, per-customer accounts, billing.
+MySQL, Laravel, a monorepo, Docker, seeders, an NL/EN switch for the admin
+labels, drag and drop, image uploads, adding or deleting a website from the
+CMS, draft versus published, per-customer API permissions, billing.

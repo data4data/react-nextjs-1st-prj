@@ -1,3 +1,5 @@
+"use client";
+
 import { SectionShell } from "@/components/sections/section-shell";
 import { PhotoStrip } from "@/components/sections/tabs/photo-strip";
 import { TabPanels } from "@/components/sections/tabs/tab-panels";
