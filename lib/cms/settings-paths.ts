@@ -1,7 +1,7 @@
 /**
  * URL pieces that are always present in the CMS, not taken from a section id.
  * A section must never reuse one of these as its `id`, or the two routes would
- * collide.
+ * collide. `colors` still exists as a redirect onto Algemeen.
  */
 export const SETTINGS_FIXED_PATHS = [
   "general",

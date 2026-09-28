@@ -1,26 +1,17 @@
-import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 
-import { ColorsEditor } from "@/components/settings/fixed-part-editors";
 import { loadSettingsSite } from "@/lib/cms/load-settings-site";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ site: string }>;
-}): Promise<Metadata> {
-  const { site: slug } = await params;
-  const site = await loadSettingsSite(slug);
-
-  return { title: `Kleuren — ${site.title}` };
-}
-
+/**
+ * Kleuren used to be its own page. Name and colours now live together under
+ * Algemeen, so old bookmarks still land on the combined form.
+ */
 export default async function ColorsSettingsPage({
   params,
 }: {
   params: Promise<{ site: string }>;
 }) {
   const { site: slug } = await params;
-  const site = await loadSettingsSite(slug);
-
-  return <ColorsEditor initialSite={site} />;
+  await loadSettingsSite(slug);
+  redirect(`/${slug}/settings/general`);
 }

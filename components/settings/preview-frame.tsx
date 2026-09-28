@@ -15,7 +15,7 @@ export function PreviewFrame({
 }) {
   return (
     <div
-      className="overflow-hidden rounded-xl border bg-background text-foreground shadow-sm"
+      className="w-full overflow-hidden rounded-xl border bg-background text-foreground shadow-sm"
       style={
         {
           "--primary": theme.primary,

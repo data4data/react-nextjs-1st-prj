@@ -70,32 +70,45 @@ On either park:
 
 ## 5. The CMS
 
-On **http://localhost:3000/veluwse-hei/settings**:
+Log in, then open **http://localhost:3000/veluwse-hei/settings**. You land on
+**Algemeen**, with **Voorbeeld** open.
 
-- Change **Naam van de website** and press **Opslaan**. Open `/veluwse-hei` in a
-  second tab: the new name is in the header and in the browser tab title.
-- Under **Kleuren**, click one of the small colour squares for the **secundaire
-  kleur** and save. The stripes behind the sections and the footer follow. No
-  component was edited.
-- Want a colour that is not in the row? Click the big square on the left. Your
-  operating system's colour picker opens, and it has a field for an exact code
-  if a brand colour was given to you as `#1f6f8b`.
-- Do the same for the **primaire kleur**. Buttons, links and focus rings change,
-  and so does the button inside the contact modal.
-- Change **Icoon naast de naam** to the tent and save. The icon in the top bar
-  changes. The CMS can only offer four icons, because the schema only allows
-  four; it can never point at a picture that is missing.
-- Click the **eye icon** on a section to hide it, and save. The section is gone
-  from the website, but its text is still in the form: click the eye again and
-  it comes back.
-- Use the **arrows** to move a section up or down, and save. The order on the
-  website follows, and the stripes stay alternating.
-- In the tabs section, switch **Fotostrip** / **Panelen** and save. Open the
-  public page and check the layout followed.
+- The top bar shows **Beheer / Recreatiepark De Veluwse Hei**. **Alle websites**
+  is the outline button; **Uitloggen** is the filled one. Your email sits at
+  the bottom of the sidebar, not between those buttons.
+- The sidebar under **Site** has only **Algemeen**. Under **Pagina** the
+  sections are short names: Koptekst, Slider, Tekstblok, Tabs, Contact,
+  Voettekst.
+- **Algemeen** is name, description and both colours. Change the name and
+  press **Opslaan**. Open `/veluwse-hei` in a **new** tab from **Bekijk
+  website**: the name is in the header and in the browser tab. The admin tab
+  stays open.
+- Under **Kleuren**, click a small square for the **secundaire kleur** and
+  save. The stripes and the footer follow. No component was edited. The CMS
+  chrome stays grey; only the preview and the public site change colour.
+- Want a colour that is not in the row? Click the big square. Your operating
+  system's picker opens, and it has a field for an exact code such as
+  `#1f6f8b`.
+- Do the same for the **primaire kleur**. Buttons and focus rings change, and
+  so does the button inside the contact modal.
+- Open **Koptekst**. The icon is a picture, not a name. Pick the tent, change
+  the name in the bar and the button text, then save. Check the public header.
+- Open a section such as **Slider** or **Tabs**. On the right of that item in
+  the sidebar: hover the **arrows** and the **eye**. The tooltip says what
+  they do. Hide a section, save, and it is gone from the website. Show it
+  again and it comes back. The word "(verborgen)" is not in the list; a
+  closed eye is enough.
+- Move a section up or down, and save. The order on the website follows, and
+  the stripes stay alternating.
+- In **Tabs**, **Weergave van de tabs** is a select: Fotostrip or Panelen.
+  Switch it, save, and check the public page.
 - Open **/zeeduin** and check it did **not** change. Saving one park only
   rebuilds that park.
-- On **/zeeduin/settings**, the "Het seizoen 2027" block is hidden on purpose.
-  Switch it on and save to see it appear in the middle of the page.
+- On **/zeeduin/settings**, the "Het seizoen 2027" block starts hidden. Switch
+  the eye on and save to see it appear in the middle of the page.
+
+Kleuren used to be its own URL. **http://localhost:3000/veluwse-hei/settings/colors**
+still works: it sends you to Algemeen.
 
 ## 6. The error pages
 

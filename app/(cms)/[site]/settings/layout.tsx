@@ -1,4 +1,5 @@
-import { SettingsNav } from "@/components/settings/settings-nav";
+import { SettingsShell } from "@/components/settings/settings-shell";
+import { getUser } from "@/lib/auth/session";
 import { loadSettingsSite } from "@/lib/cms/load-settings-site";
 
 /**
@@ -13,14 +14,11 @@ export default async function SettingsLayout({
   params: Promise<{ site: string }>;
 }) {
   const { site: slug } = await params;
-  const site = await loadSettingsSite(slug);
+  const [site, user] = await Promise.all([loadSettingsSite(slug), getUser()]);
 
   return (
-    <div className="flex flex-col gap-8 lg:flex-row lg:items-start">
-      <aside className="lg:sticky lg:top-20 lg:w-60 lg:shrink-0 lg:self-start">
-        <SettingsNav site={site} />
-      </aside>
-      <div className="min-w-0 flex-1">{children}</div>
-    </div>
+    <SettingsShell site={site} userEmail={user?.email}>
+      {children}
+    </SettingsShell>
   );
 }

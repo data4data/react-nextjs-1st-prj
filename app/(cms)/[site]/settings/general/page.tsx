@@ -20,7 +20,7 @@ export default async function GeneralSettingsPage({
   params: Promise<{ site: string }>;
 }) {
   const { site: slug } = await params;
-  const site = await loadSettingsSite(slug);
+  await loadSettingsSite(slug);
 
-  return <GeneralEditor initialSite={site} />;
+  return <GeneralEditor />;
 }

@@ -109,6 +109,8 @@ changed in Next 16, such as `middleware.ts` becoming `proxy.ts`.
 - The tabs section has two layouts, chosen in the CMS: a **fotostrip** (one
   wide picture and small pictures under it) or **panels** (columns that open
   when you click them). Veluwse Hei uses the strip; Zeeduin uses the panels.
+- Settings is its own app: a sidebar, one page per part, and a switch between
+  **Voorbeeld** and **Bewerken**. Name and colours live together on Algemeen.
 - A commit is refused if the author, the committer or a `Co-authored-by` line
   names a tool instead of a person. The check lives in `githooks/` and is
   copied into `.git/hooks` on `npm install`.

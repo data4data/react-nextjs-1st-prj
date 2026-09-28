@@ -20,7 +20,7 @@ export default async function HeaderSettingsPage({
   params: Promise<{ site: string }>;
 }) {
   const { site: slug } = await params;
-  const site = await loadSettingsSite(slug);
+  await loadSettingsSite(slug);
 
-  return <HeaderEditor initialSite={site} />;
+  return <HeaderEditor />;
 }

@@ -24,29 +24,25 @@ function previewIndex(site: Site, sectionId: string): number {
   );
 }
 
+/**
+ * Name, description and park colours in one frame, so the editor sees the
+ * result the visitor will get — not two separate knobs.
+ */
 export function GeneralPreview({ site }: { site: Site }) {
   return (
     <PreviewFrame theme={site.theme}>
-      <div className="p-8">
-        <p className="text-sm text-muted-foreground">Naam van de website</p>
+      <div className="flex h-16 items-center border-b bg-background/90 px-6">
+        <p className="truncate font-semibold text-primary">{site.title}</p>
+      </div>
+      <div className="bg-section-tint px-6 py-10">
+        <p className="text-sm text-muted-foreground">Secundaire kleur, gewassen</p>
         <p className="mt-2 text-2xl font-semibold text-pretty">{site.title}</p>
         {site.description ? (
           <p className="mt-4 max-w-prose leading-relaxed text-pretty text-muted-foreground">
             {site.description}
           </p>
         ) : null}
-      </div>
-    </PreviewFrame>
-  );
-}
-
-export function ColorsPreview({ site }: { site: Site }) {
-  return (
-    <PreviewFrame theme={site.theme}>
-      <SiteHeader header={site.header} siteSlug={site.slug} />
-      <div className="bg-section-tint px-6 py-10">
-        <p className="text-sm text-muted-foreground">Secundaire kleur, gewassen</p>
-        <Button className="mt-4">Primaire kleur</Button>
+        <Button className="mt-6">Primaire kleur</Button>
       </div>
     </PreviewFrame>
   );
@@ -55,7 +51,7 @@ export function ColorsPreview({ site }: { site: Site }) {
 export function HeaderPreview({ site }: { site: Site }) {
   return (
     <PreviewFrame theme={site.theme}>
-      <SiteHeader header={site.header} siteSlug={site.slug} />
+      <SiteHeader header={site.header} siteSlug={site.slug} fill />
     </PreviewFrame>
   );
 }
@@ -63,7 +59,7 @@ export function HeaderPreview({ site }: { site: Site }) {
 export function FooterPreview({ site }: { site: Site }) {
   return (
     <PreviewFrame theme={site.theme}>
-      <SiteFooter footer={site.footer} siteName={site.title} />
+      <SiteFooter footer={site.footer} siteName={site.title} fill />
     </PreviewFrame>
   );
 }

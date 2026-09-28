@@ -20,7 +20,7 @@ export default async function FooterSettingsPage({
   params: Promise<{ site: string }>;
 }) {
   const { site: slug } = await params;
-  const site = await loadSettingsSite(slug);
+  await loadSettingsSite(slug);
 
-  return <FooterEditor initialSite={site} />;
+  return <FooterEditor />;
 }

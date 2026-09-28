@@ -38,5 +38,5 @@ export default async function SectionSettingsPage({ params }: SectionParams) {
 
   if (!section) notFound();
 
-  return <SectionPartEditor initialSite={site} sectionId={section.id} />;
+  return <SectionPartEditor sectionId={section.id} />;
 }
