@@ -1,16 +1,20 @@
-import Image from "next/image";
-
 import { SectionShell } from "@/components/sections/section-shell";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "cn";
+import { PhotoStrip } from "@/components/sections/tabs/photo-strip";
+import { TabPanels } from "@/components/sections/tabs/tab-panels";
 import type { TabsSectionData } from "@/lib/cms/types";
 
 /**
- * Tabs whose direction is chosen in the CMS: side by side, or stacked in a
- * column on the left.
+ * A few subjects behind one heading, with a picture for each.
  *
- * This stays a server component. The tabs remember which one is open, but that
- * memory lives inside the Tabs component itself, so this file needs no state.
+ * The CMS picks one of two ways to draw them, and both run left to right:
+ *
+ * - `strip`: one wide picture with the text on it, and small pictures under it
+ *   to switch with.
+ * - `panels`: a row of columns where the open one grows wide.
+ *
+ * This file only chooses; the two files it calls do the drawing. That keeps
+ * each layout in one place and lets a third one be added later without
+ * touching either of them.
  */
 export function TabsSection({
   section,
@@ -19,62 +23,26 @@ export function TabsSection({
   section: TabsSectionData;
   index: number;
 }) {
-  const isVertical = section.orientation === "vertical";
-
   return (
     <SectionShell id={section.id} index={index}>
-      <h2 className="text-3xl font-semibold text-balance sm:text-4xl">
-        {section.heading}
-      </h2>
+      <div className="grid gap-4 md:grid-cols-2 md:items-end md:gap-12">
+        <h2 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl lg:text-5xl">
+          {section.heading}
+        </h2>
+        {section.intro ? (
+          <p className="leading-relaxed text-pretty text-muted-foreground md:pb-1">
+            {section.intro}
+          </p>
+        ) : null}
+      </div>
 
-      <Tabs
-        defaultValue={section.items[0]?.label}
-        orientation={section.orientation}
-        className={cn(
-          "mt-8",
-          // Vertical only from md upward: on a phone there is no room for a
-          // column of tabs next to the content.
-          isVertical && "md:flex-row md:items-start md:gap-8"
+      <div className="mt-8 sm:mt-10 lg:mt-12">
+        {section.layout === "panels" ? (
+          <TabPanels items={section.items} />
+        ) : (
+          <PhotoStrip items={section.items} />
         )}
-      >
-        <TabsList
-          className={cn(
-            "max-w-full overflow-x-auto",
-            isVertical && "md:w-56 md:shrink-0 md:flex-col"
-          )}
-        >
-          {section.items.map((item) => (
-            <TabsTrigger key={item.label} value={item.label}>
-              {item.label}
-            </TabsTrigger>
-          ))}
-        </TabsList>
-
-        {section.items.map((item) => (
-          <TabsContent key={item.label} value={item.label}>
-            <div className="grid items-center gap-8 md:grid-cols-2">
-              <div>
-                <h3 className="text-xl font-semibold text-balance">{item.heading}</h3>
-                <p className="mt-3 leading-relaxed text-pretty text-muted-foreground">
-                  {item.body}
-                </p>
-              </div>
-
-              {item.image ? (
-                <div className="relative aspect-[4/3] w-full overflow-hidden rounded-xl">
-                  <Image
-                    src={item.image}
-                    alt=""
-                    fill
-                    sizes="(min-width: 768px) 50vw, 100vw"
-                    className="object-cover"
-                  />
-                </div>
-              ) : null}
-            </div>
-          </TabsContent>
-        ))}
-      </Tabs>
+      </div>
     </SectionShell>
   );
 }

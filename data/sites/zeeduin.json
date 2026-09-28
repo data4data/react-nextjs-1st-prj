@@ -43,27 +43,49 @@
       "visible": true,
       "type": "tabs",
       "heading": "Wat u bij ons vindt",
-      "orientation": "vertical",
       "items": [
-        {
-          "label": "Strandhuisjes",
-          "heading": "Twaalf huisjes op palen",
-          "body": "Elk huisje slaapt vier personen en heeft een eigen terras met uitzicht over de duinen. De keuken is compleet, de bedden zijn opgemaakt bij aankomst.",
-          "image": "/hero-images/duin2.png"
-        },
-        {
-          "label": "Duinkamperen",
-          "heading": "Kleine velden uit de wind",
-          "body": "Twintig plekken tussen de duindoorns, met stroom en een eigen waterpunt. Geen rijen, geen slagbomen.",
-          "image": "/hero-images/duin1.png"
-        },
         {
           "label": "Het strand",
           "heading": "Acht kilometer zand",
           "body": "Bij laag water loopt u zo tot Domburg. De strandtent bij de opgang is van maart tot november open.",
+          "meta": "300 m via vlonderpad · Strandtent maart–nov",
           "image": "/hero-images/duin3.png"
+        },
+        {
+          "label": "Strandhuisjes",
+          "heading": "Twaalf huisjes op palen",
+          "body": "Elk huisje slaapt vier personen en heeft een eigen terras met uitzicht over de duinen. De keuken is compleet, de bedden zijn opgemaakt bij aankomst.",
+          "meta": "4 personen · Eigen terras · Bedden opgemaakt",
+          "image": "/hero-images/duin2.png"
+        },
+        {
+          "label": "Duinkamperen",
+          "heading": "Kamperen in de luwte",
+          "body": "Beschutte plaatsen in de duinpannen, uit de wind en op loopafstand van het strand. Stroom en water bij elke plek.",
+          "meta": "Stroom en water · Beschutte duinpannen · Maart – november",
+          "image": "/hero-images/duin1.png"
+        },
+        {
+          "label": "Faciliteiten",
+          "heading": "Klein maar compleet",
+          "body": "Een wasruimte, een fietsenstalling en een winkeltje voor brood en het hoognodige. Wifi bereikt het hele park.",
+          "meta": "Wasruimte · Fietsenstalling · Winkeltje"
+        },
+        {
+          "label": "Eten & drinken",
+          "heading": "Vers brood en een bord vis",
+          "body": "Het paviljoen bij de opgang bakt elke ochtend brood en serveert 's avonds vis van de Zeeuwse kust.",
+          "meta": "Ontbijt vanaf 08:00 · Keuken tot 21:00"
+        },
+        {
+          "label": "Kinderen",
+          "heading": "Vrij spelen in het zand",
+          "body": "Een speelduin, een vlonderpad zonder auto's en in de zomervakantie twee keer per week een strandspeurtocht.",
+          "meta": "Speelduin · Autovrij · Speurtocht in de zomer"
         }
-      ]
+      ],
+      "intro": "Strandhuisjes, beschutte duinplekken en de zee op driehonderd meter.",
+      "layout": "panels"
     },
     {
       "id": "info",
