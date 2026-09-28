@@ -41,8 +41,8 @@ nothing left to change.
 
 **Rule of thumb.** If it must react to a click, it is a client part.
 
-**Exercise.** Look at `components/sections/tabs-section.tsx`. Why does it need
-`"use client"`, while `info-section.tsx` does not?
+**Exercise.** Look at `components/sections/tabs/tab-panels.tsx`. Why does it
+need `"use client"`, while `components/sections/tabs/photo-strip.tsx` does not?
 
 ---
 
@@ -51,17 +51,21 @@ nothing left to change.
 **What it means.** An **event** is something the user does: a click, typing.
 **State** is a value the component remembers between renders.
 
-**In this project.** The tabs section remembers which tab is open:
+**In this project.** The **panels** layout remembers which column is open, in
+`components/sections/tabs/tab-panels.tsx`:
 
 ```tsx
-const [active, setActive] = useState(items[0].label)
+const [openIndex, setOpenIndex] = useState(0)
 ```
 
-Clicking a tab calls `setActive`. React draws the component again with the new
-value. You never touch the HTML yourself.
+Clicking a column calls `setOpenIndex`. React draws the component again with
+the new value. You never touch the HTML yourself.
 
-**What breaks.** Writing `active = "faciliteiten"` directly. The value changes
-but nothing on screen updates, because React was not told.
+The **fotostrip** layout does not keep that memory itself. It uses the shadcn
+`Tabs` component, and the open tab lives in there.
+
+**What breaks.** Writing `openIndex = 2` directly. The value changes but
+nothing on screen updates, because React was not told.
 
 **Exercise.** Add a fourth tab to `data/sites/veluwse-hei.json`. How many `.tsx`
 files did you have to change?

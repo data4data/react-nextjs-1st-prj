@@ -2,19 +2,12 @@
 
 What is finished is in [plan.md](plan.md). This file lists what is **not** done.
 
-## Not tested by hand yet
+## Next up
 
-The build, the types and the lint checks pass. The login gate, the section
-order and the colors were checked from the command line. These need a real
-browser and a few clicks:
-
-- [ ] Send a message through the contact modal and see the green toast.
-- [ ] Check that `data/messages.local.json` appears, with the right `"site"`.
-- [ ] Press **Opslaan** in the settings screen and see the website change.
-- [ ] Log in and out through the real form (not with a handmade cookie).
-- [ ] Look at every section at 375px, 768px and 1280px, on **both** parks.
-
-Steps for all of these are in [testing.md](testing.md).
+- [ ] **Settings as its own app.** Own layout and a sidebar to jump between
+      parts. One page per part: general, colors, header, footer, and each
+      content section (slider, text, tabs, contact). On every page, a switch
+      between **preview** (how that part looks on the website) and **edit**.
 
 ## Missing in the CMS
 
@@ -29,7 +22,6 @@ hand.
 - [ ] Add and delete footer links.
 - [ ] Upload images (the image is a path you type, such as `/hero-images/veluwe1.png`).
 - [ ] See the received contact messages in the CMS.
-- [ ] A preview of the page before saving.
 
 ## Rough edges
 
@@ -53,7 +45,7 @@ hand.
 
 ## Bigger steps, on purpose left for later
 
-These were out of scope for this branch. Each is its own feature branch.
+These were out of scope. Each is its own feature branch.
 
 - [ ] **Real backend**: replace the JSON file with MySQL, through Laravel or
       Prisma. Only the inside of `lib/cms/repository.ts` changes.
@@ -67,10 +59,3 @@ These were out of scope for this branch. Each is its own feature branch.
 - [ ] **Drag and drop** for the section order.
 - [ ] **Deploy**: the JSON file works locally, but a hosted server may have a
       read-only file system. This needs the database step first.
-
-## Housekeeping
-
-- [ ] Turn off **Cursor Settings > Git & PRs > Attribution** so commits stay
-      free of a co-author line. The local hook in `.git/hooks` does this too,
-      but hooks are not committed, so they do not travel with the repo.
-- [ ] Push the branch: `git push origin main`.

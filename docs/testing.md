@@ -18,9 +18,10 @@ Open **http://localhost:3000**
 You get a card per website. The two dots on each card are that park's primary
 and secondary color.
 
-- Open **De Veluwse Hei**. Green, a tree in the top bar, four sections.
-- Go back and open **Zeeduin**. Blue, waves in the top bar, three sections, and
-  the tabs stand in a column instead of a row.
+- Open **De Veluwse Hei**. Blue-grey, a tree in the top bar, four sections, and
+  the tabs are a **fotostrip**: one wide picture and small pictures under it.
+- Go back and open **Zeeduin**. Teal, waves in the top bar, three sections, and
+  the tabs are **panels**: click a thin column and it opens wide.
 
 Nothing about those two pages is duplicated in the code. Both come out of
 `app/(site)/[site]/page.tsx`; only the JSON file behind them differs.
@@ -34,7 +35,8 @@ On either park:
 
 - The slider at the top: drag it, or use the arrows (arrows appear from tablet
   size upward).
-- The tabs: click each tab, the content changes without reloading the page.
+- The tabs: click each tab (or each column on Zeeduin), the content changes
+  without reloading the page. Tabs without a picture show a hatch, not a hole.
 - Notice the soft stripes behind every other section, and the footer. That
   colour is the **secondary color** from the CMS, washed out. Sand on the
   Veluwe, warm orange at Zeeduin.
@@ -88,7 +90,8 @@ On **http://localhost:3000/veluwse-hei/settings**:
   it comes back.
 - Use the **arrows** to move a section up or down, and save. The order on the
   website follows, and the stripes stay alternating.
-- In the tabs section, switch **Naast elkaar** / **Onder elkaar** and save.
+- In the tabs section, switch **Fotostrip** / **Panelen** and save. Open the
+  public page and check the layout followed.
 - Open **/zeeduin** and check it did **not** change. Saving one park only
   rebuilds that park.
 - On **/zeeduin/settings**, the "Het seizoen 2027" block is hidden on purpose.
