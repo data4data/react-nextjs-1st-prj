@@ -35,7 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="flex min-h-full flex-col">
         {children}
-        <Toaster richColors position="top-center" />
+        <Toaster richColors position="top-right" />
       </body>
     </html>
   );

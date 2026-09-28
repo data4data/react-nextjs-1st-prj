@@ -50,13 +50,22 @@ export const infoSectionSchema = sectionBase.extend({
 export const tabsSectionSchema = sectionBase.extend({
   type: z.literal("tabs"),
   heading: z.string().min(1),
-  orientation: z.enum(["horizontal", "vertical"]),
+  /** One line beside the heading that says what the tabs are about. */
+  intro: z.string(),
+  /**
+   * How the tabs are drawn. `strip` puts one wide picture on top and a row of
+   * small pictures underneath; `panels` lays every tab out as a column that
+   * opens up when you click it. Both read left to right.
+   */
+  layout: z.enum(["strip", "panels"]),
   items: z
     .array(
       z.object({
         label: z.string().min(1),
         heading: z.string().min(1),
         body: z.string(),
+        /** A short line of facts under the text, such as opening months. */
+        meta: z.string().optional(),
         image: z.string().optional(),
       })
     )

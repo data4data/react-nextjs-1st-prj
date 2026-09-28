@@ -134,3 +134,18 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  /**
+   * A quiet diagonal hatch. It fills the place of a picture the CMS does not
+   * have yet, so a tab without an image still looks made on purpose.
+   */
+  .bg-hatch {
+    background-color: var(--muted);
+    background-image: repeating-linear-gradient(
+      45deg,
+      color-mix(in oklch, var(--foreground) 7%, transparent) 0 6px,
+      transparent 6px 16px
+    );
+  }
+}

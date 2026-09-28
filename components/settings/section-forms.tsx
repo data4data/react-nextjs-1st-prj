@@ -83,6 +83,15 @@ function InfoForm({ section, onChange }: FormProps<InfoSectionData>) {
   );
 }
 
+/** The two ways the tabs can be drawn, with their Dutch labels. */
+const tabsLayouts = [
+  { value: "strip", label: "Fotostrip" },
+  { value: "panels", label: "Panelen" },
+] as const satisfies ReadonlyArray<{
+  value: TabsSectionData["layout"];
+  label: string;
+}>;
+
 function TabsForm({ section, onChange }: FormProps<TabsSectionData>) {
   function updateItem(index: number, patch: Partial<TabsSectionData["items"][number]>) {
     const items = section.items.map((item, i) => (i === index ? { ...item, ...patch } : item));
@@ -96,18 +105,24 @@ function TabsForm({ section, onChange }: FormProps<TabsSectionData>) {
         value={section.heading}
         onChange={(heading) => onChange({ ...section, heading })}
       />
+      <TextAreaField
+        label="Introtekst naast de kop"
+        value={section.intro}
+        rows={2}
+        onChange={(intro) => onChange({ ...section, intro })}
+      />
 
       <div className="grid gap-2">
-        <Label>Richting van de tabs</Label>
-        <div className="flex gap-2">
-          {(["horizontal", "vertical"] as const).map((orientation) => (
+        <Label>Weergave van de tabs</Label>
+        <div className="flex flex-wrap gap-2">
+          {tabsLayouts.map(({ value, label }) => (
             <Button
-              key={orientation}
+              key={value}
               type="button"
-              variant={section.orientation === orientation ? "default" : "outline"}
-              onClick={() => onChange({ ...section, orientation })}
+              variant={section.layout === value ? "default" : "outline"}
+              onClick={() => onChange({ ...section, layout: value })}
             >
-              {orientation === "horizontal" ? "Naast elkaar" : "Onder elkaar"}
+              {label}
             </Button>
           ))}
         </div>
@@ -132,6 +147,12 @@ function TabsForm({ section, onChange }: FormProps<TabsSectionData>) {
             value={item.body}
             rows={4}
             onChange={(body) => updateItem(index, { body })}
+          />
+          <TextField
+            label="Kort regeltje met feiten"
+            value={item.meta ?? ""}
+            placeholder="300 m via vlonderpad · Strandtent maart–nov"
+            onChange={(meta) => updateItem(index, { meta: meta || undefined })}
           />
           <TextField
             label="Afbeelding"
