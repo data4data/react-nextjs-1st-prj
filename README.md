@@ -106,3 +106,9 @@ changed in Next 16, such as `middleware.ts` becoming `proxy.ts`.
 - Contact messages are written to `data/messages.local.json`, which is not
   committed. There is no email sending yet.
 - Site copy is Dutch; code, file names and comments are English.
+- The tabs section has two layouts, chosen in the CMS: a **fotostrip** (one
+  wide picture and small pictures under it) or **panels** (columns that open
+  when you click them). Veluwse Hei uses the strip; Zeeduin uses the panels.
+- A commit is refused if the author, the committer or a `Co-authored-by` line
+  names a tool instead of a person. The check lives in `githooks/` and is
+  copied into `.git/hooks` on `npm install`.

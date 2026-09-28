@@ -90,6 +90,7 @@ app/
 
 components/
   sections/               one file per section type + registry + shell
+    tabs/                 fotostrip and panels layouts for the tabs section
   settings/               the edit forms
   ui/                     shadcn components. Do not hand-edit.
   site-header.tsx
@@ -107,6 +108,7 @@ data/
   messages.local.json     contact messages. Not committed.
 
 proxy.ts                  blocks /<site>/settings when not logged in
+githooks/                 commit checks, copied into .git/hooks on npm install
 ```
 
 Two kinds of brackets, and they do opposite things:
@@ -156,6 +158,7 @@ hidden. So the page must look right with **any** mix.
 - Text from the CMS can be one word or one hundred. Text wraps, it never
   overflows.
 - Images have a fixed aspect ratio, so a tall photo cannot stretch the page.
+- A tab without a picture shows a quiet hatch, not a hole in the row.
 - If all sections are hidden, the page shows the header, the footer and a calm
   message. Never an empty white screen.
 
@@ -178,6 +181,8 @@ would use a library such as Auth.js or Clerk.
 - One branch per feature: `feature/cms-one-page`.
 - Small commits with short lowercase messages.
 - Merge back with `--no-ff` so the feature stays visible in the history.
+- A commit is refused if the author, the committer or a `Co-authored-by` line
+  names a tool. `npm install` copies `githooks/` into `.git/hooks`.
 
 ## Run it locally
 
