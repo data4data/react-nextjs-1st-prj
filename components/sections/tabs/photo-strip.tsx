@@ -1,3 +1,5 @@
+"use client";
+
 import { TabMedia, TabScrim } from "@/components/sections/tabs/tab-media";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import type { TabsSectionData } from "@/lib/cms/types";
@@ -8,8 +10,8 @@ type Items = TabsSectionData["items"];
  * One wide picture with the text on top of it, and a row of small pictures
  * underneath to switch between them.
  *
- * This stays a server component. Which tab is open is remembered inside the
- * Tabs component, so no state is needed here.
+ * Which tab is open is remembered inside the Tabs component, so this file
+ * still has no state of its own.
  */
 export function PhotoStrip({ items }: { items: Items }) {
   return (

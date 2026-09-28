@@ -1,3 +1,5 @@
+"use client";
+
 import type { Site } from "@/lib/cms/types";
 
 /**

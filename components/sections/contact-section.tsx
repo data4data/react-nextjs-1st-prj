@@ -1,3 +1,5 @@
+"use client";
+
 import { ContactModal } from "@/components/contact-modal";
 import { SectionShell } from "@/components/sections/section-shell";
 import type { ContactSectionData } from "@/lib/cms/types";

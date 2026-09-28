@@ -1,9 +1,13 @@
+"use client";
+
 import { SectionShell } from "@/components/sections/section-shell";
 import type { InfoSectionData } from "@/lib/cms/types";
 
 /**
- * A heading and a block of text. No state, no clicks, so this stays a server
- * component: it arrives in the browser as finished HTML.
+ * A heading and a block of text.
+ *
+ * This is a client component so the settings preview can redraw it as you type.
+ * The public page still passes the text in as props.
  */
 export function InfoSection({
   section,

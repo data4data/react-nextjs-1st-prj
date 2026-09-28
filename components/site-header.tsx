@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Sun, Tent, TreePine, Waves } from "lucide-react";
 

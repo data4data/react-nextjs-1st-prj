@@ -1,3 +1,5 @@
+"use client";
+
 import type { ComponentType } from "react";
 
 import { CarouselSection } from "@/components/sections/carousel-section";
