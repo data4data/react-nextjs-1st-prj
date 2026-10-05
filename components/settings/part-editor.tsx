@@ -42,7 +42,7 @@ export function PartEditor({
       </div>
 
       <Tabs defaultValue="preview" className="flex-col gap-6">
-        <TabsList className="sticky top-[4.25rem] z-10">
+        <TabsList className="sticky top-17 z-10">
           <TabsTrigger value="edit">Bewerken</TabsTrigger>
           <TabsTrigger value="preview">Voorbeeld</TabsTrigger>
         </TabsList>

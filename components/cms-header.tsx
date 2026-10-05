@@ -18,7 +18,7 @@ export function CmsHeader({
 }) {
   return (
     <header className="shrink-0 border-b bg-background">
-      <div className="flex h-[4.25rem] w-full items-center justify-between gap-4 px-4 sm:px-6">
+      <div className="flex h-17 w-full items-center justify-between gap-4 px-4 sm:px-6">
         <div className="flex min-w-0 items-center gap-2">
           <Link href="/" className="shrink-0 text-sm font-semibold">
             Beheer

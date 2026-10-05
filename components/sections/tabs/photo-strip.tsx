@@ -18,7 +18,7 @@ export function PhotoStrip({ items }: { items: Items }) {
     <Tabs defaultValue={items[0]?.label} className="flex-col gap-0">
       {items.map((item, index) => (
         <TabsContent key={item.label} value={item.label} className="text-base">
-          <figure className="relative aspect-4/3 w-full overflow-hidden rounded-3xl sm:aspect-16/9 lg:aspect-21/9">
+          <figure className="relative aspect-4/3 w-full overflow-hidden rounded-3xl sm:aspect-video lg:aspect-21/9">
             <TabMedia
               image={item.image}
               priority={index === 0}

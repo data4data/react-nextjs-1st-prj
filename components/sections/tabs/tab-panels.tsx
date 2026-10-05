@@ -57,7 +57,7 @@ export function TabPanels({ items }: { items: Items }) {
     <div
       role="tablist"
       onKeyDown={onKeyDown}
-      className="flex flex-col gap-2 sm:h-[28rem] sm:flex-row sm:gap-3 lg:h-[32rem]"
+      className="flex flex-col gap-2 sm:h-112 sm:flex-row sm:gap-3 lg:h-128"
     >
       {items.map((item, index) => {
         const open = index === openIndex;

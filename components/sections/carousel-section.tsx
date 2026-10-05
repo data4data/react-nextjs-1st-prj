@@ -34,7 +34,7 @@ export function CarouselSection({
         <CarouselContent className="ml-0">
           {section.slides.map((slide, slideIndex) => (
             <CarouselItem key={`${section.id}-${slideIndex}`} className="pl-0">
-              <div className="relative aspect-[4/3] w-full sm:aspect-[21/9]">
+              <div className="relative aspect-4/3 w-full sm:aspect-21/9">
                 <Image
                   src={slide.image}
                   alt={slide.title}
@@ -43,7 +43,7 @@ export function CarouselSection({
                   priority={slideIndex === 0}
                   className="object-cover"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/30 to-transparent" />
 
                 <div className="absolute inset-x-0 bottom-0">
                   <div className="mx-auto w-full max-w-6xl px-4 pb-10 sm:pb-16">
